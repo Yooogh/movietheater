@@ -1,5 +1,5 @@
 
 public class Main {
-	//주석숮석
+	//주석주석
 
 }
