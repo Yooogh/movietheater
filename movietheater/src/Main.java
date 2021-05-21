@@ -1,6 +1,6 @@
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("¼Ò½ºÆ®¸®¿¡¼­ add¸¦ ÇØºÃ¾î");
+		System.out.println("ê¿ˆì€ ì´ë£¨ì–´ ì§„ë‹¤");
 	}
 }
