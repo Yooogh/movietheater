@@ -1,5 +1,6 @@
 
 public class Main {
-	//Ï£ºÏÑùÏ£ºÏÑù
-
+	public static void main(String[] args) {
+		System.out.println("πÈ¡æºÆ");
+	}
 }
