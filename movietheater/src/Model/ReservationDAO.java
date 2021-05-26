@@ -75,7 +75,7 @@ public class ReservationDAO {
     public List<ReservationVO> findAll(String userid){
         List<ReservationVO> reservationList = new ArrayList<>();
         connDB();
-        String query = "select * from Reservation_Test";
+        String query = "select * from Reservation_Test where userId like" + userid;
         ResultSet rs = null;
         try {
             rs = state.executeQuery(query);

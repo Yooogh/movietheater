@@ -62,7 +62,7 @@ public class ReservationView{
 
         Date date = new Date();
 
-        String userId = "test";
+        String userId = "test2";
 
         for(int i = 0 ; i<movie.length; i++){
             System.out.print(movie[i] + "\t");
@@ -88,9 +88,9 @@ public class ReservationView{
         System.out.print("예약할 인원을 선택하세요 : ");
         selectPeople = scanner.nextInt();
 
-        reserve.setTheaterName(theater[selectTheater]);
-        reserve.setMovieName(movie[selectMovie]);
-        reserve.setSeat(seat[selectSeat]);
+        reserve.setTheaterName(theater[selectTheater-1]);
+        reserve.setMovieName(movie[selectMovie-1]);
+        reserve.setSeat(seat[selectSeat-1]);
         reserve.setPeople(selectPeople);
         reserve.setTotalPrice(selectPeople * 10000);
         reserve.setUserId(userId);
