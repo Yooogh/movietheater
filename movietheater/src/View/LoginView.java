@@ -14,6 +14,8 @@ public class LoginView extends JFrame implements ActionListener {
 	private JButton loginButton = new JButton("로그인");
 	private String id = "";
 	private String password = "";
+	private JTextField idText = new JTextField("",10);
+	private JPasswordField PwText= new JPasswordField("",10);
 	
 	public LoginView() {
 		super("YongSeok CINEMA");
@@ -22,7 +24,8 @@ public class LoginView extends JFrame implements ActionListener {
 		
 		getContentPane().add(Panel);
 
-		Panel.add(registerLabel);
+		Panel.add(idText);
+		Panel.add(PwText);
 		Panel.add(registerLabel);
 		Panel.add(forgotPwdLabel);
 		Panel.add(loginButton);
