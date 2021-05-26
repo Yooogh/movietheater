@@ -1,8 +1,13 @@
+import Model.ReservationDAO;
+import Service.ReservationService;
 import View.LoginView;
+import View.ReservationView;
 
 public class Main {
 	public static void main(String[] args) {
-		System.out.println("꿈은 이루어 진다");
-		new LoginView();
+		ReservationDAO d = new ReservationDAO();
+		ReservationService s = new ReservationService(d);
+		ReservationView view = new ReservationView(s);
+		view.mainMenu();
 	}
 }
