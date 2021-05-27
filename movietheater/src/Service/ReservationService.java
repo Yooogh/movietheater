@@ -46,7 +46,14 @@ public class ReservationService {
     }
 
     public int getSales(LocalDate date){
-        return reserveDAO.getSales(date);
+        int total =0;
+
+        try {
+            total = reserveDAO.getSales(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
     }
 
     //상영관 리스트 전체 조회

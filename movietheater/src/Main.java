@@ -5,9 +5,9 @@ import View.ReservationView;
 
 public class Main {
 	public static void main(String[] args) {
-		ReservationDAO d = new ReservationDAO();
-		ReservationService s = new ReservationService(d);
-		ReservationView view = new ReservationView(s);
+		ReservationDAO dao = new ReservationDAO();
+		ReservationService service = new ReservationService(dao);
+		ReservationView view = new ReservationView(service);
 		view.mainMenu();
 	}
 }

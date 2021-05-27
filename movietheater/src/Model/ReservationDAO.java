@@ -1,5 +1,7 @@
 package Model;
 
+import sun.reflect.annotation.ExceptionProxy;
+
 import javax.xml.transform.Result;
 import java.sql.*;
 import java.time.LocalDate;
@@ -31,6 +33,8 @@ public class ReservationDAO {
 
         try {
             state.executeUpdate(query);
+            state.close();
+            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -45,6 +49,7 @@ public class ReservationDAO {
             rs = state.executeQuery(query);
             rs.close();
             state.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -54,19 +59,12 @@ public class ReservationDAO {
     public ReservationVO findOne(Long id) throws Exception{
         ReservationVO reserve = new ReservationVO();
         connDB();
-        String query = "select * from Reservation_Test where reserve_id like " + "'" + id + "'";
+        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where reserve_id like ?");
+        pst.setLong(1,id);
         ResultSet rs = null;
-        rs = state.executeQuery(query);
+        rs = pst.executeQuery();
 
-        reserve.setReserve_id(rs.getLong("reserve_id"));
-        reserve.setTheaterName(rs.getString("theaterName"));
-        reserve.setMovieName(rs.getString("movieName"));
-        reserve.setSeat(rs.getString("seat"));
-        reserve.setReserveDay(rs.getDate("reserveDay").toLocalDate());
-        reserve.setReserveTime(rs.getString("reserveTime"));
-        reserve.setPeople(rs.getInt("people"));
-        reserve.setTotalPrice(rs.getInt("totalPrice"));
-        reserve.setUserId(rs.getString("userId"));
+        reserve = settingData(rs);
 
         rs.close();
         state.close();
@@ -78,24 +76,13 @@ public class ReservationDAO {
     public List<ReservationVO> findAll(String userid) throws Exception{
         List<ReservationVO> reservationList = new ArrayList<>();
         connDB();
-        String query = "select * from Reservation_Test where userId like " + "\'" + userid + "\'";
+        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where UserId like ?");
+        pst.setString(1,userid);
         ResultSet rs = null;
-        rs = state.executeQuery(query);
+        rs = pst.executeQuery();
 
         while(rs.next()){
-            ReservationVO reserve = new ReservationVO();
-
-            reserve.setReserve_id(rs.getLong("reserve_id"));
-            reserve.setTheaterName(rs.getString("theaterName"));
-            reserve.setMovieName(rs.getString("movieName"));
-            reserve.setSeat(rs.getString("seat"));
-            reserve.setReserveDay(rs.getDate("reserveDay").toLocalDate());
-            reserve.setReserveTime(rs.getString("reserveTime"));
-            reserve.setPeople(rs.getInt("people"));
-            reserve.setTotalPrice(rs.getInt("totalPrice"));
-            reserve.setUserId(rs.getString("userId"));
-
-            reservationList.add(reserve);
+            reservationList.add(settingData(rs));
         }
         rs.close();
         state.close();
@@ -113,24 +100,24 @@ public class ReservationDAO {
             rs = state.executeQuery(query);
             rs.close();
             state.close();
+            con.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public int getSales(LocalDate date){
+    public int getSales(LocalDate date) throws Exception {
         int total = 0;
         connDB();
-        String query = "select * from Reservation_Test where reserveDay like " + "\'" + date + "\'";
+        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where reserveDay like ?");
+        pst.setDate(1,Date.valueOf(date));
         ResultSet rs = null;
-        try {
-            rs = state.executeQuery(query);
-            while(rs.next())
-                total += rs.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        rs = pst.executeQuery();
+
+        while(rs.next())
+            total += rs.getInt(1);
+
         return total;
     }
 
@@ -144,5 +131,24 @@ public class ReservationDAO {
         }
     }
 
+    private ReservationVO settingData(ResultSet rs){
+        ReservationVO reserve = new ReservationVO();
+
+        try {
+            reserve.setReserve_id(rs.getLong("reserve_id"));
+            reserve.setTheaterName(rs.getString("theaterName"));
+            reserve.setMovieName(rs.getString("movieName"));
+            reserve.setSeat(rs.getString("seat"));
+            reserve.setReserveDay(rs.getDate("reserveDay").toLocalDate());
+            reserve.setReserveTime(rs.getString("reserveTime"));
+            reserve.setPeople(rs.getInt("people"));
+            reserve.setTotalPrice(rs.getInt("totalPrice"));
+            reserve.setUserId(rs.getString("userId"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return reserve;
+    }
 
 }
