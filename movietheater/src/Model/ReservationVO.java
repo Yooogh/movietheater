@@ -3,7 +3,7 @@ package Model;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,8 +15,8 @@ public class ReservationVO {
     private String movieName;
     private String seat; //좌석위치 수정필요
 
-    private Date reserveDay;
-    private Date reserveTime;
+    private LocalDate reserveDay;
+    private String reserveTime;
 
     private int people;
 

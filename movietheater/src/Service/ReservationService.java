@@ -21,13 +21,27 @@ public class ReservationService {
         reserveDAO.remove(id);
     }
 
+    public void deleteAll(){
+        reserveDAO.deleteAll();
+    }
+
     public ReservationVO findOne(Long id){
-        ReservationVO one = reserveDAO.findOne(id);
+        ReservationVO one = null;
+        try {
+            one = reserveDAO.findOne(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return one;
     }
 
     public List<ReservationVO> findAll(String userid){
-        List<ReservationVO> all = reserveDAO.findAll(userid);
+        List<ReservationVO> all = null;
+        try {
+            all = reserveDAO.findAll(userid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return all;
     }
 

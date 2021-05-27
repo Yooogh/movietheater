@@ -5,6 +5,7 @@ import Model.ReservationVO;
 import Service.ReservationService;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +27,7 @@ public class ReservationView{
         System.out.println("1. 예약하기 2. 예약확인 3. 예약취소");
         select = scanner.nextInt();
 
-        while(!(select ==1 || select ==2 || select == 3)){
+        while(!(select ==1 || select ==2 || select == 3 || select == 4)){
             System.out.println("다시 입력해주십시오");
             select = scanner.nextInt();
         }
@@ -40,6 +41,9 @@ public class ReservationView{
                 break;
             case 3:
                 ReservationCancel();
+                break;
+            case 4:
+                ReservationDelete();
                 break;
         }
 
@@ -88,9 +92,12 @@ public class ReservationView{
         System.out.print("예약할 인원을 선택하세요 : ");
         selectPeople = scanner.nextInt();
 
+        LocalDate reserveNow = LocalDate.now();
+
         reserve.setTheaterName(theater[selectTheater-1]);
         reserve.setMovieName(movie[selectMovie-1]);
         reserve.setSeat(seat[selectSeat-1]);
+        reserve.setReserveDay(reserveNow);
         reserve.setPeople(selectPeople);
         reserve.setTotalPrice(selectPeople * 10000);
         reserve.setUserId(userId);
@@ -103,18 +110,21 @@ public class ReservationView{
     public void ReservationCheck() {
         Scanner scanner = new Scanner(System.in);
         System.out.printf("현재 예매현황을 확인");
-        System.out.printf("1을 누르면 돌아갑니다.");
+        System.out.println("1을 누르면 돌아갑니다.");
         System.out.println("=========================================");
         int select = 0;
-        List<ReservationVO> test = reservationService.findAll("test");
+        List<ReservationVO> test = reservationService.findAll("test2");
+
+        if(test.isEmpty())
+            return;
 
         for(int i = 0; i<test.size(); i++){
-            System.out.println("예약번호 : " + test.get(i).getReserve_id()+ "\t");
+            System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
             System.out.print("상영관 : " + test.get(i).getTheaterName() + "\t");
             System.out.print("영화 : " + test.get(i).getMovieName()+ "\t");
             System.out.print("예약일 : " + test.get(i).getReserveDay()+ "\t");
             System.out.print("예매 인원 : " + test.get(i).getPeople()+ "\t");
-            System.out.print("좌석 : " + test.get(i).getSeat());
+            System.out.println("좌석 : " + test.get(i).getSeat());
         }
         select = scanner.nextInt();
         if(select == 1)
@@ -125,22 +135,32 @@ public class ReservationView{
         Scanner scanner = new Scanner(System.in);
         System.out.println("예약을 취소합니다.");
         Long select = 0L;
-        List<ReservationVO> test = reservationService.findAll("test");
+        List<ReservationVO> test = reservationService.findAll("test2");
+
+        if(test.isEmpty())
+            return;
 
         for(int i = 0; i<test.size(); i++){
-            System.out.println("예약번호 : " + test.get(i).getReserve_id()+ "\t");
+            System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
             System.out.print("상영관 : " + test.get(i).getTheaterName() + "\t");
             System.out.print("영화 : " + test.get(i).getMovieName()+ "\t");
             System.out.print("예약일 : " + test.get(i).getReserveDay()+ "\t");
             System.out.print("예매 인원 : " + test.get(i).getPeople()+ "\t");
-            System.out.print("좌석 : " + test.get(i).getSeat());
+            System.out.println("좌석 : " + test.get(i).getSeat());
         }
+        System.out.print("예약번호를 입력하세요 : ");
         select = scanner.nextLong();
 
         reservationService.remove(select);
 
     }
 
+    public void ReservationDelete(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("전체 예약을 취소합니다.");
+        reservationService.deleteAll();
+
+    }
 
     private String[] tempTheater(){
         String[] theater = {"1관", "2관", "3관", "4관"};
