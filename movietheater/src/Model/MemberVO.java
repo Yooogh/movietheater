@@ -9,6 +9,16 @@ public class MemberVO {
 	private int admin;
 	private String created;
 	
+	public MemberVO() {
+		super();
+	}
+	public MemberVO(String id, String password, String name, String birth, int admin) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.birth = birth;
+		this.admin = admin;
+	}
 	public String getId() {
 		return id;
 	}

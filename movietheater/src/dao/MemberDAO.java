@@ -68,15 +68,17 @@ public class MemberDAO {
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "insert into Member " + "(id, password, name, birth) " + "values ( ?,?,?,TO_DATE(?, 'YYYY-MM-DD))";
+			String sql = "insert into Member " + "(id, password, name, birth,admin) " + "values ( ?,?,?,TO_DATE(?, 'YYYY-MM-DD'),?)";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getId());
 			pstmt.setString(2, vo.getPassword());
 			pstmt.setString(3, vo.getName());
 			pstmt.setString(4, vo.getBirth());
+			pstmt.setLong(5, vo.getAdmin());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			result = -1;
 		} finally {
 			close(pstmt, null, null);
 		}
@@ -110,15 +112,41 @@ public class MemberDAO {
 		}
 		return vo;
 	}
+	
+	
+
+	public boolean IsExist(String id) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		boolean exist = false;
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement();
+			String sql = "select * from Member where id = '" + id + "'";
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				exist = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt, rs, null);
+		}
+		return exist;
+	}
 
 	public int delete(String id) {
 		Connection conn = null;
 		Statement stmt = null;
 
-		if (id.equals("admin")) {
+		//if (id.equals("admin")) {
+		//	return -1;
+		//}
+		MemberVO mvo = selectById(id);
+		if(mvo.getAdmin() == 1) {
 			return -1;
 		}
-
 		int result = 0;
 		try {
 			conn = DBConnection.getConnection();
