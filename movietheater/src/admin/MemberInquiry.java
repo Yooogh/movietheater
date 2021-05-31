@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MemberInquiry {
 
     static Scanner sc = new Scanner(System.in);
-    public void memberView() {
+    public void memberView() {      //  호출되는 메소드
 
         while (true) {
             System.out.println("=========회원 정보 관리=========");
@@ -34,7 +34,7 @@ public class MemberInquiry {
                     System.out.println("회원 ID: ");
                     System.out.println("회원 이름: ");
                     System.out.println("회원 등급: ");
-                    System.out.println("처음으로 돌아가려면 0을 입력: ");
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
                     i = sc.nextLine();
                     continue;
 
@@ -44,7 +44,7 @@ public class MemberInquiry {
                      //sc를 이용해서 ID를 입력
                     System.out.println("회원 이름: ");
                     System.out.println("회원 생년월일: ");
-                    System.out.println("처음으로 돌아가려면 0을 입력: ");
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
                     i = sc.nextLine();
                     continue;
 
@@ -54,6 +54,8 @@ public class MemberInquiry {
                     //sc를 이용해서 ID를 입력
                     System.out.println("회원 등급: ");
                     //silver, gold, vip
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
+                    i = sc.nextLine();
                     continue;
 
                 case "5":
@@ -63,6 +65,8 @@ public class MemberInquiry {
                     System.out.println("영화 이름: ");
                     System.out.println("상영관: ");
                     System.out.println("상영시간: ");
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
+                    i = sc.nextLine();
                     continue;
 
                 case "6":
