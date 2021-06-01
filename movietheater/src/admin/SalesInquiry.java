@@ -21,22 +21,22 @@ public class SalesInquiry {
                 case "1":
                     System.out.println("==========월별 매출==========");
                     System.out.print("조회를 원하는 월: ");
-                    i = sc.nextLine();
-
+                    i = sc.nextLine();//조회를 원하는 달을 입력
+                    //DB에 저장된 매출 출력
                     continue;
 
                 case "2":
                     System.out.println("==========일별 매출==========");
                     System.out.println("조회를 원하는 일: ");
-                    i = sc.nextLine();
-
+                    i = sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
+                    //해당 날짜의 매출 출력
                     continue;
 
                 case "3":
                     System.out.println("=========영화별 매출=========");
                     System.out.println("조회를 원하는 영화:");
-                    i = sc.nextLine();
-
+                    i = sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
+                    //해당 영화의 매출 출력
                     continue;
 
                 case "4":
@@ -48,7 +48,7 @@ public class SalesInquiry {
                     sc.close();
                     System.exit(0); // 프로그램 강제종료 구문
                     break;
-            }
-        }
-    }
+            }//switch 종료
+        }//while 종료
+    }//salesInquiry 종료
 }
