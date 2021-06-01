@@ -2,7 +2,7 @@ package admin;
 
 import java.util.Scanner;
 
-public class RevenueInquiry {
+public class SalesInquiry {
     Scanner sc = new Scanner(System.in);
     public void salesInquiry() {
 
@@ -22,18 +22,21 @@ public class RevenueInquiry {
                     System.out.println("==========월별 매출==========");
                     System.out.print("조회를 원하는 월: ");
                     i = sc.nextLine();
+
                     continue;
 
                 case "2":
                     System.out.println("==========일별 매출==========");
                     System.out.println("조회를 원하는 일: ");
                     i = sc.nextLine();
+
                     continue;
 
                 case "3":
                     System.out.println("=========영화별 매출=========");
                     System.out.println("조회를 원하는 영화:");
                     i = sc.nextLine();
+
                     continue;
 
                 case "4":
@@ -43,7 +46,7 @@ public class RevenueInquiry {
                 case "5":
                     System.out.println("==프로그램을 종료합니다==");
                     sc.close();
-                    System.exit(0);
+                    System.exit(0); // 프로그램 강제종료 구문
                     break;
             }
         }
