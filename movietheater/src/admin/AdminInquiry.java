@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 public class AdminInquiry {
 
-    static Scanner sc = new Scanner(System.in);
     public void memberView() {      //  호출되는 메소드
+    Scanner sc = new Scanner(System.in);
 
         while (true) {
             System.out.println("=========회원 정보 관리=========");
@@ -33,7 +33,7 @@ public class AdminInquiry {
                 case "2":
                     System.out.println("=======회원 등급 조회=======");
                     System.out.println("조회를 원하는 회원 ID: ");
-                    Sting ID = sc.nextLine();// scanner를 이용하여 조회할 ID입력
+//                    ID = sc.nextLine(); scanner를 이용하여 조회할 ID입력
                     System.out.println("회원 이름: ");
                     System.out.println("회원 등급: ");
                     System.out.print("처음으로 돌아가려면 0을 입력: ");
@@ -43,7 +43,7 @@ public class AdminInquiry {
                 case "3":
                     System.out.println("=======회원 ID 조회=======");
                     System.out.println("조회 하고자 하는 회원 ID: ");
-                    i = sc.nextLine();// scanner를 이용하여 조회할 ID입력
+                    //i = sc.nextLine();// scanner를 이용하여 조회할 ID입력
                     System.out.println("회원 이름: ");
                     System.out.println("회원 생년월일: ");
                     System.out.print("처음으로 돌아가려면 0을 입력: ");
@@ -56,7 +56,7 @@ public class AdminInquiry {
                     //sc를 이용해서 ID를 입력
                     System.out.println("회원 등급: ");//DB에 저장된 회원의 등급 출력 silver, gold, vip
                     System.out.println("수정할 회원 등급: ");
-                    String G = sc.nextLine();//수정할 등급 입력
+                    //String G = sc.nextLine();//수정할 등급 입력
                     System.out.print("처음으로 돌아가려면 0을 입력: ");
                     i = sc.nextLine();
                     continue;

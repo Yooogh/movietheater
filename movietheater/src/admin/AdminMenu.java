@@ -5,7 +5,7 @@ import dao.AdminDAO;
 import java.util.Scanner;
 
 public class AdminMenu {
-    public static void main(String[] args) {
+    public void AdminView() {
         Scanner sc = new Scanner(System.in);
         AdminInquiry MI = new AdminInquiry();
         SalesInquiry RI = new SalesInquiry();
@@ -46,12 +46,12 @@ public class AdminMenu {
                     String ID = sc.nextLine();
                     avo.setAdminID(ID);//AdminVO의 adminID로 세팅
                     System.out.print("사용할 PW: " );
-                    String PW = sc.nextLine();// AdminVO의 adminPW로 세팅
-                    avo.setAdminPW(PW);
+                    String PW = sc.nextLine();
+                    avo.setAdminPW(PW);// AdminVO의 adminPW로 세팅
                     adao.saveID(avo);
                     System.out.print("처음으로 돌아가려면 아무키 입력: ");
                     i = sc.nextLine();
-                    System.out.println("===처음 화면으로 돌아갑니다====");
+                    System.out.println("===관리 항목으로 돌아갑니다====");
                     continue;
 
                 case "6":
@@ -60,7 +60,8 @@ public class AdminMenu {
                     String id = sc.next();
                     adao.deleteID(id);//String형식의 id를 입력받아 DB의 Adminaccount의 ID형식일 경우 삭제
                     System.out.println("==관리자 ID가 삭제 되었습니다==");
-                    System.out.println("===처음 화면으로 돌아갑니다====");
+                    System.out.println("===관리 항목으로 돌아갑니다====");
+                    i = sc.nextLine();
                     continue;
 
                 case "7":

@@ -3,8 +3,8 @@ package admin;
 import java.util.Scanner;
 
 public class SalesInquiry {
-    Scanner sc = new Scanner(System.in);
     public void salesInquiry() {
+    Scanner sc = new Scanner(System.in);
 
         while (true) {
             System.out.println("==========매출 조회==========");
@@ -21,21 +21,21 @@ public class SalesInquiry {
                 case "1":
                     System.out.println("==========월별 매출==========");
                     System.out.print("조회를 원하는 월: ");
-                    i = sc.nextLine();//조회를 원하는 달을 입력
+                    //i = sc.nextLine();//조회를 원하는 달을 입력
                     //DB에 저장된 매출 출력
                     continue;
 
                 case "2":
                     System.out.println("==========일별 매출==========");
                     System.out.println("조회를 원하는 일: ");
-                    i = sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
+                    //i = sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
                     //해당 날짜의 매출 출력
                     continue;
 
                 case "3":
                     System.out.println("=========영화별 매출=========");
                     System.out.println("조회를 원하는 영화:");
-                    i = sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
+                    //i = sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
                     //해당 영화의 매출 출력
                     continue;
 
