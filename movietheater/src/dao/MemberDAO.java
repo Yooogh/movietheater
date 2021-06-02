@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import Model.MemberVO;
+import VO.MemberVO;
 
 public class MemberDAO {
 
@@ -140,9 +140,6 @@ public class MemberDAO {
 		Connection conn = null;
 		Statement stmt = null;
 
-		//if (id.equals("admin")) {
-		//	return -1;
-		//}
 		MemberVO mvo = selectById(id);
 		if(mvo.getAdmin() == 1) {
 			return -1;
@@ -166,14 +163,14 @@ public class MemberDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		ArrayList<MemberVO> clist = null;
+		ArrayList<MemberVO> list = null;
 
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Member";
 			rs = stmt.executeQuery(sql);
-			clist = new ArrayList<MemberVO>();
+			list = new ArrayList<MemberVO>();
 			while (rs.next()) {
 				MemberVO vo = new MemberVO();
 				vo.setId(rs.getString("id"));
@@ -183,14 +180,14 @@ public class MemberDAO {
 				vo.setPoint(rs.getInt("points"));
 				vo.setAdmin(rs.getInt("admin"));
 				vo.setCreated(rs.getString("created").split(" ")[0]);
-				clist.add(vo);
+				list.add(vo);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(stmt, rs, null);
 		}
-		return clist;
+		return list;
 	}
 
 	public int update(MemberVO vo) {

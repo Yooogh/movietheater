@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-import Model.MemberVO;
+import VO.MemberVO;
 import dao.MemberDAO;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

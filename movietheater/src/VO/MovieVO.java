@@ -1,4 +1,4 @@
-package Model;
+package VO;
 
 public class MovieVO {
 	private String moviename;

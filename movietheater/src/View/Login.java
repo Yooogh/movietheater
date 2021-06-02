@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
-import Model.MemberVO;
+import VO.MemberVO;
 import dao.MemberDAO;
 
 
@@ -33,10 +33,10 @@ public class Login {
 			Currentname = mvo.getName();
 			if(mvo.getAdmin() == 1) {
 				System.out.println("관리자 화면으로 로그인 되셨습니다.");
-				new MainMenu();
+				//new MainMenu();
 			}else {
 				System.out.println(Currentname+"님 안녕하세요");
-				new MainMenu();
+				//new MainMenu();
 			}
 		}
 		}
