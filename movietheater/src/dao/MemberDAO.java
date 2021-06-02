@@ -31,7 +31,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(ps, rs, null);
+			close(ps, rs, conn);
 		}
 		return result;
 	}
@@ -41,22 +41,22 @@ public class MemberDAO {
 			if (stmt != null)
 				stmt.close();
 			if (rs != null)
-				stmt.close();
+				rs.close();
 			if (conn != null)
-				stmt.close();
+				conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void close(PreparedStatement stmt, ResultSet rs, Connection conn) {
+	public void close(PreparedStatement ps, ResultSet rs, Connection conn) {
 		try {
-			if (stmt != null)
-				stmt.close();
+			if (ps != null)
+				ps.close();
 			if (rs != null)
-				stmt.close();
+				rs.close();
 			if (conn != null)
-				stmt.close();
+				conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -80,7 +80,7 @@ public class MemberDAO {
 			e.printStackTrace();
 			result = -1;
 		} finally {
-			close(pstmt, null, null);
+			close(pstmt, null, conn);
 		}
 		return result;
 	}
@@ -89,7 +89,7 @@ public class MemberDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		MemberVO vo = new MemberVO();
+		MemberVO vo = null;
 
 		try {
 			conn = DBConnection.getConnection();
@@ -97,6 +97,7 @@ public class MemberDAO {
 			String sql = "select * from Member where id = '" + id + "'";
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {
+				vo = new MemberVO();
 				vo.setId(rs.getString("id"));
 				vo.setPassword(rs.getString("password"));
 				vo.setName(rs.getString("name"));
@@ -108,7 +109,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return vo;
 	}
@@ -131,7 +132,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return exist;
 	}
@@ -153,7 +154,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, null, null);
+			close(stmt, null, conn);
 		}
 
 		return result;
@@ -185,7 +186,7 @@ public class MemberDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return list;
 	}
@@ -206,7 +207,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt, null, null);
+			close(pstmt, null, conn);
 		}
 		return result;
 	}

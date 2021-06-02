@@ -21,22 +21,22 @@ public class PlexDAO {
 			if (stmt != null)
 				stmt.close();
 			if (rs != null)
-				stmt.close();
+				rs.close();
 			if (conn != null)
-				stmt.close();
+				conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public void close(PreparedStatement stmt, ResultSet rs, Connection conn) {
+	public void close(PreparedStatement ps, ResultSet rs, Connection conn) {
 		try {
-			if (stmt != null)
-				stmt.close();
+			if (ps != null)
+				ps.close();
 			if (rs != null)
-				stmt.close();
+				rs.close();
 			if (conn != null)
-				stmt.close();
+				conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,7 @@ public class PlexDAO {
 			e.printStackTrace();
 			result = -1;
 		} finally {
-			close(pstmt, null, null);
+			close(pstmt, null, conn);
 		}
 		return result;
 	}
@@ -68,7 +68,7 @@ public class PlexDAO {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-		PlexVO vo = new PlexVO();
+		PlexVO vo = null;
 
 		try {
 			conn = DBConnection.getConnection();
@@ -76,6 +76,7 @@ public class PlexDAO {
 			String sql = "select * from Plex where PlexNo = '" + plexNo + "'";
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {
+				vo = new PlexVO();
 				vo.setPlexNo(rs.getInt("PlexNo"));
 				vo.setName(rs.getString("name"));
 				vo.setRow(rs.getInt("R"));
@@ -84,12 +85,17 @@ public class PlexDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
+		//if(vo != null){
+		//	System.out.println("Null이 아님");
+		//}else
+		//	System.out.println("Null임");
+
 		return vo;
 	}
 
-	public boolean IsExist(String PlexNo) {
+	public boolean IsExist(int plexNo) {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -97,7 +103,7 @@ public class PlexDAO {
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			String sql = "select * from Plex where PlexNo = '" + PlexNo + "'";
+			String sql = "select * from Plex where PlexNo = '" + plexNo + "'";
 			rs = stmt.executeQuery(sql);
 			if (rs.next()) {
 				exist = true;
@@ -105,7 +111,7 @@ public class PlexDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return exist;
 	}
@@ -122,7 +128,7 @@ public class PlexDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, null, null);
+			close(stmt, null, conn);
 		}
 
 		return result;
@@ -160,7 +166,7 @@ public class PlexDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, null, null);
+			close(stmt, null, conn);
 		}
 
 		return result;
@@ -194,7 +200,7 @@ public class PlexDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return list;
 	}
@@ -236,7 +242,7 @@ public class PlexDAO {
 			e.printStackTrace();
 		} finally {
 			//close(stmt, rs, null);
-			close(ps, rs, null);
+			close(ps, rs, conn);
 		}
 		return list;
 	}
@@ -265,7 +271,7 @@ public class PlexDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			close(stmt, rs, null);
+			close(stmt, rs, conn);
 		}
 		return list;
 	}
@@ -287,7 +293,7 @@ public class PlexDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt, null, null);
+			close(pstmt, null, conn);
 		}
 		return result;
 	}
