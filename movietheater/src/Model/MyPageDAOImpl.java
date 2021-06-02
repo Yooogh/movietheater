@@ -5,11 +5,7 @@ import java.util.Scanner;
 
 public class MyPageDAOImpl implements MyPageDAO{
 	
-	/*
-	 * 참고 블로그
-	 * https://mainichibenkyo.tistory.com/53
-	 */
-	
+	//정보 수정 세분화
     private static final String driver = "oracle.jdbc.driver.OracleDriver";
     private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private static final String user = "scott";
@@ -199,6 +195,45 @@ public class MyPageDAOImpl implements MyPageDAO{
 		
 	}
 	
+	//비번 이름 생일 변경
+	public void updatePW(MyPageVO mp) {
+		String PW = mp.getPw();
+
+		try {
+
+			connDB();
+
+		String query = "UPDATE MYPAGE SET PW = ? WHERE ID = ?";
+		System.out.println(query);
+
+			PreparedStatement pstmt = con.prepareStatement(query);
+			// 뭐를 업데이트 해야하는지?
+			
+
+			System.out.println("해당 아이디");
+			String whereID = mp.getId();
+			System.out.println("수정할 비번");
+			String setPW = mp.getPw();
+
+			pstmt.setString(4, whereID);
+			pstmt.setString(1, setPW);
+
+			pstmt.executeUpdate();
+
+			closeDB();
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	public void updateName() {
+		
+	}
+	
+	public void updateBirth() {
+		
+	}
 	
 	
 	
