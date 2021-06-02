@@ -45,12 +45,12 @@ public class ReservationDAO {
         connDB();
             String query = "DELETE from Reservation_Test where reserve_id like " + "'" + id + "'";
             ResultSet rs= null;
+
         try {
-            rs = state.executeQuery(query);
-            rs.close();
+            state.executeUpdate(query);
             state.close();
             con.close();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -95,10 +95,8 @@ public class ReservationDAO {
     public void deleteAll(){
         connDB();
         String query = "DELETE from Reservation_Test";
-        ResultSet rs= null;
         try {
-            rs = state.executeQuery(query);
-            rs.close();
+            state.executeUpdate(query);
             state.close();
             con.close();
         } catch (SQLException e) {
@@ -107,19 +105,33 @@ public class ReservationDAO {
 
     }
 
-    public int getSales(LocalDate date) throws Exception {
+    public int getSalesByDay(LocalDate date) throws Exception {
         int total = 0;
         connDB();
-        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where reserveDay like ?");
+        PreparedStatement pst = con.prepareStatement("select sum(totalPrice), reserveDay from Reservation_Test group by reserveDay having reserveDay = ?");
         pst.setDate(1,Date.valueOf(date));
         ResultSet rs = null;
         rs = pst.executeQuery();
 
-        while(rs.next())
-            total += rs.getInt(1);
+        total = rs.getInt(1);
 
         return total;
     }
+
+    public int getSalesByMonth(LocalDate date) throws Exception{
+        int total = 0;
+        connDB();
+        PreparedStatement pst
+                = con.prepareStatement("select sum(totalPrice), reserveDay from Reservation_Test group by reserveDay having reserveDay = ?");
+        pst.setDate(1,Date.valueOf(date));
+        ResultSet rs = null;
+        rs = pst.executeQuery();
+
+
+
+        return total;
+        }
+
 
     public void connDB(){
         try {

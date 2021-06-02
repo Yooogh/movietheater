@@ -49,7 +49,7 @@ public class ReservationService {
         int total =0;
 
         try {
-            total = reserveDAO.getSales(date);
+            total = reserveDAO.getSalesByDay(date);
         } catch (Exception e) {
             e.printStackTrace();
         }

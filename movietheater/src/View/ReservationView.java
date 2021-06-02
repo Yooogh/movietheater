@@ -1,6 +1,7 @@
 package View;
 
 
+import Model.ReservationDAO;
 import Model.ReservationVO;
 import Service.ReservationService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class ReservationView{
     public void setMovie(){
         String []movie = {};
     }
+
 
     public void mainMenu() {
         Scanner scanner = new Scanner(System.in);
