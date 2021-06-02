@@ -21,16 +21,16 @@ public class AdminDAO {
 
         try {
             state.executeUpdate(query);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
 
     public void deleteID(String ID){
         connDB();
-        String query = "DELETE from Adminaccount where adminID like"
-                        + "'" + ID + "'";
+        String query = "DELETE from AdminAccount where adminID like" + "'" + ID + "'";
+        // 쿼리문을 이용하여 DB내 AdminAccount에서 일치하는 ID를 삭제
         ResultSet rs = null;
 
         try {
@@ -38,9 +38,26 @@ public class AdminDAO {
             rs.close();
             state.close();
             con.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
+
+    public boolean LoginID(String ID, String PW){
+        connDB();
+        ResultSet rs = null;
+        try {
+            PreparedStatement PS = con.prepareStatement("SELECT * FROM  AdminAccount where adminID like ? and adminPW like ?");
+            PS.setString(1, ID);
+            PS.setString(2, PW);
+            rs = PS.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void connDB(){

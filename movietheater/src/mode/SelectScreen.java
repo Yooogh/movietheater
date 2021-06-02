@@ -23,8 +23,8 @@ public class SelectScreen {
                     continue;
 
                 case "2":
-//                    AL.adminLogin();
-                    AM.AdminView();
+                    AL.adminLogin();
+//                    AM.AdminView();
                     continue;
 
                 case "3":
