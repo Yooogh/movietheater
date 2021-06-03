@@ -33,7 +33,9 @@ public class MyPageDAOImpl implements MyPageDAO{
     	
     	try {
 			state.executeUpdate(query);
-			closeDB();
+			state.close();
+			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}	
@@ -43,14 +45,13 @@ public class MyPageDAOImpl implements MyPageDAO{
 	@Override
 	public void viewMember(MyPageVO mp) {
 		// TODO 내 정보 조회
-		try {
-
 			connDB();
 			
 			String ID = mp.getId();
 			
 			String query = "SELECT ID, NAME, BIRTH FROM MYPAGE WHERE ID = ?";
 			//실행 쿼리
+		try {
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
 			pstmt.setString(1, ID);
@@ -63,9 +64,14 @@ public class MyPageDAOImpl implements MyPageDAO{
 				System.out.println("ID : " + ID +
 									", 이름 : " + name +
 									", 생년월일 : " + birth);
+
+				MyPageVO myPageVO = new MyPageVO();
+				myPageVO.setId(id);
+
+				rs.close();
+				state.close();
+				con.close();
 			}
-			
-			closeDB();
 
 		} catch (Exception e) {
 			e.getMessage();
@@ -97,8 +103,8 @@ public class MyPageDAOImpl implements MyPageDAO{
 
 			pstmt.executeUpdate();
 
-			closeDB();
-
+			state.close();
+			con.close();
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -124,7 +130,8 @@ public class MyPageDAOImpl implements MyPageDAO{
 
 			pstmt.executeUpdate();//처리
 
-			closeDB();
+			state.close();
+			con.close();
 
 		} catch (Exception e) {
 			e.getMessage();
@@ -150,9 +157,10 @@ public class MyPageDAOImpl implements MyPageDAO{
 			if(rs.next() == true) {
 				cntID = rs.getInt("cnt");
 			} //cnt가 1이면 중복 0이면 안 중복
-			
-			closeDB();
-			
+
+			state.close();
+			con.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -171,13 +179,5 @@ public class MyPageDAOImpl implements MyPageDAO{
         }
 	}
     
-	public void closeDB() {
-		try {
-			rs.close();
-			state.close();
-			con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+
 }

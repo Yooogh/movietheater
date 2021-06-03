@@ -3,20 +3,18 @@ package Model;
 import java.util.Scanner;
 
 public class MyPageUI {
-	
-	
-	static Scanner sc = new Scanner(System.in);
-	static MyPageVO mp = new MyPageVO();
-	static MyPageDAOImpl dao = new MyPageDAOImpl();
+	private Scanner sc = new Scanner(System.in);
+	private MyPageDAOImpl dao = new MyPageDAOImpl();
 	
 //고객 메인
-	public static void userMain() {
+	public void userMain() {
 		System.out.println("메인화면뿅");
 	}
 
 	
 //회원가입
-	public static void signUpMember() {
+	public void signUpMember() {
+		MyPageVO mp = new MyPageVO();
 		System.out.println("--------=====회원가입=====--------");
 		
 		System.out.print("\t▶ 아이디 : ");
@@ -72,7 +70,8 @@ public class MyPageUI {
 		userMain();
 	}
 	
-	private static void imsiLogin() {
+	private void imsiLogin() {
+		MyPageVO mp = new MyPageVO();
 		System.out.println("순서대로 아이디");
 		String lid = sc.nextLine();
 		System.out.println("비번");
@@ -89,13 +88,12 @@ public class MyPageUI {
 	}
 
 //내 정보 조회
-	public static void viewMember() {
-		
+	public void viewMember() {
+		MyPageVO mp = new MyPageVO();
 		if (mp.getId() == null) { //로그인
 			imsiLogin();
 		}
-		
-		
+
 		String id = mp.getId();
 		String name = mp.getName();
 		String birth = mp.getBirth();
@@ -133,7 +131,8 @@ public class MyPageUI {
 	}
 	
 //내 정보 수정
-	public static void modifyMember() {
+	public void modifyMember() {
+		MyPageVO mp = new MyPageVO();
 		System.out.println("--------====내 정보 수정====--------");
 
 				System.out.println("수정할 정보를 입력하세요");
@@ -157,8 +156,8 @@ public class MyPageUI {
 	}
 	
 //회원 탈퇴
-	public static void deleteMember() {
-		
+	public void deleteMember() {
+		MyPageVO mp = new MyPageVO();
 		String id = mp.getId();
 		String pw = mp.getPw();
 		
@@ -199,7 +198,7 @@ public class MyPageUI {
 	
 	
 	//아이디 타당성 검사
-	private static void checkID(String ID) {
+	private void checkID(String ID) {
 
 		do{
 			//1. 글자수 체크
@@ -226,7 +225,7 @@ public class MyPageUI {
 	}
 	
 	//비밀번호 길이 검사
-	private static void checkPW(String PW) {
+	private void checkPW(String PW) {
 		
 		do {
 			
@@ -242,7 +241,7 @@ public class MyPageUI {
 	}
 	
 	//비밀번호 일치 여부 검사
-	private static void checkPW(String PW, String rePW) { 
+	private void checkPW(String PW, String rePW) {
 		
 		do {
 			
@@ -257,11 +256,5 @@ public class MyPageUI {
 		} while(true);
 	}
 
-
-	
-	public static void main(String[] args) {
-//		signUpMember();
-		viewMember();
-	}
 
 }
