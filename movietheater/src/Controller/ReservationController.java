@@ -3,6 +3,7 @@ package Controller;
 import Model.ReservationDAO;
 import Model.ReservationVO;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class ReservationController {
@@ -42,11 +43,27 @@ public class ReservationController {
         return all;
     }
 
-    public int getSales(LocalDate date){
-        int total =0;
+    public int getSalesByDay(String date){
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_LOCAL_DATE);
 
+        int total =0;
         try {
-            total = reserveDAO.getSalesByDay(date);
+            total = reserveDAO.getSalesByDay(localDate);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
+    public int getSalesByMonth(String month){
+        String startDay = month + "-01";
+        LocalDate localDate = LocalDate.parse(startDay, DateTimeFormatter.ISO_LOCAL_DATE);
+        int lastDayOfMonth = localDate.lengthOfMonth();
+        String lastDay = month + lastDayOfMonth;
+
+        int total =0;
+        try {
+            total = reserveDAO.getSalesByMonth(startDay,lastDay);
         } catch (Exception e) {
             e.printStackTrace();
         }

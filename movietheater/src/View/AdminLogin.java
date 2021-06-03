@@ -1,7 +1,6 @@
-package mode;
+package View;
 
-import admin.AdminMenu;
-import dao.AdminDAO;
+import Model.AdminDAO;
 
 import java.util.Scanner;
 

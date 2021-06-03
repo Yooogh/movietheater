@@ -1,11 +1,13 @@
-package admin;
+package View;
+
+import Controller.ReservationController;
 
 import java.util.Scanner;
 
 public class SalesInquiry {
     public void salesInquiry() {
     Scanner sc = new Scanner(System.in);
-
+        ReservationController reservationController = new ReservationController();
         while (true) {
             System.out.println("==========매출 조회==========");
             System.out.println("1. 월별 매출");
@@ -21,7 +23,9 @@ public class SalesInquiry {
                 case "1":
                     System.out.println("==========월별 매출==========");
                     System.out.print("조회를 원하는 월: ");
-                    //i = sc.nextLine();//조회를 원하는 달을 입력
+                    String salesMonth = sc.nextLine();//조회를 원하는 달을 입력
+                    int monthTotal = reservationController.getSalesByMonth(salesMonth);
+                    System.out.println(salesMonth + "월의 매출은 : " + monthTotal);
                     //DB에 저장된 매출 출력
                     continue;
 
@@ -29,6 +33,9 @@ public class SalesInquiry {
                     System.out.println("==========일별 매출==========");
                     System.out.println("조회를 원하는 일: ");
                     //i = sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
+                    String salesDay = sc.nextLine();
+                    int daysTotal = reservationController.getSalesByDay(salesDay);
+                    System.out.println(salesDay + "일의 매출은 : " + daysTotal);
                     //해당 날짜의 매출 출력
                     continue;
 

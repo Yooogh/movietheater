@@ -112,22 +112,24 @@ public class ReservationDAO {
         pst.setDate(1,Date.valueOf(date));
         ResultSet rs = null;
         rs = pst.executeQuery();
-
+        rs.next();
         total = rs.getInt(1);
 
         return total;
     }
 
-    public int getSalesByMonth(LocalDate date) throws Exception{
+    public int getSalesByMonth(String startDay, String lastDay) throws Exception{
         int total = 0;
         connDB();
         PreparedStatement pst
-                = con.prepareStatement("select sum(totalPrice), reserveDay from Reservation_Test group by reserveDay having reserveDay = ?");
-        pst.setDate(1,Date.valueOf(date));
+                = con.prepareStatement("select sum(totalPrice) from Reservation_Test where reserveDay between to_date(?) and to_date(?)");
+        pst.setString(1, startDay);
+        pst.setString(2,lastDay);
+
         ResultSet rs = null;
         rs = pst.executeQuery();
-
-
+        rs.next();
+        total = rs.getInt(1);
 
         return total;
         }

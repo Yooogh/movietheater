@@ -1,4 +1,4 @@
-package dao;
+package Model;
 
 import Model.AdminVO;
 

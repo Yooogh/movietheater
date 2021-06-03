@@ -1,7 +1,7 @@
-package admin;
+package View;
 
 import Model.AdminVO;
-import dao.AdminDAO;
+import Model.AdminDAO;
 import java.util.Scanner;
 
 public class AdminMenu {

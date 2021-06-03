@@ -1,6 +1,4 @@
-package mode;
-
-import admin.AdminMenu;
+package View;
 
 import java.util.Scanner;
 
@@ -24,7 +22,6 @@ public class SelectScreen {
 
                 case "2":
                     AL.adminLogin();
-//                    AM.AdminView();
                     continue;
 
                 case "3":
