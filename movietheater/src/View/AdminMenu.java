@@ -27,13 +27,13 @@ public class AdminMenu {
             System.out.print("실행 항목 선택: ");
             String i = sc.nextLine();
 
-            switch(i){      //  실행을 원하는 번호 입력시 해당 항목 실행
+            switch(i){      //  실행을 원하는 번호 입력시 해당 항목 호출하여 실행
 
                 case "1":
                     continue;
 
                 case "2":
-                    ME.Movieadd();
+                    ME.Movieadd();      //  Movieadd 메소드 호출 실행
                     continue;
 
                 case "3":
