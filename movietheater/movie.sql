@@ -48,8 +48,6 @@ PlexNo number REFERENCES Plex(PlexNo),
 
 drop sequence resNoplus;
 drop sequence MovieNoPlus;
-drop sequence PlexNoPlus;
 
 create sequence resNoplus start with 1 increment by 1 maxvalue 99999;
 create sequence MovieNoPlus start with 1 increment by 1 maxvalue 99999;
-create sequence PlexNoPlus start with 1 increment by 1 maxvalue 99999;

@@ -49,11 +49,12 @@ public class PlexDAO {
 		try {
 			conn = DBConnection.getConnection();
 			String sql = "insert into Plex " + "(PlexNo, name, C, R) "
-					+ "values (PlexNoPlus.NEXTVAL,?,?,?)";
+					+ "values (?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getColumn());
-			pstmt.setInt(3, vo.getRow());
+			pstmt.setInt(1, vo.getPlexNo());
+			pstmt.setString(2, vo.getName());
+			pstmt.setInt(3, vo.getColumn());
+			pstmt.setInt(4, vo.getRow());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -115,6 +116,27 @@ public class PlexDAO {
 		}
 		return exist;
 	}
+	
+	public boolean IsExistName(String name) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		boolean exist = false;
+		try {
+			conn = DBConnection.getConnection();
+			stmt = conn.createStatement();
+			String sql = "select * from Plex where name = '" + name + "'";
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				exist = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt, rs, conn);
+		}
+		return exist;
+	}
 
 	public int delete(int plexNo) {
 		Connection conn = null;
@@ -133,7 +155,7 @@ public class PlexDAO {
 
 		return result;
 	}
-///*	
+/*	
 	public int deleteVer2(int plexNo) {
 		ArrayList<ReservationVO> plist = new ArrayList< ReservationVO >();
 		Connection conn = null;
@@ -171,7 +193,7 @@ public class PlexDAO {
 
 		return result;
 	}
-//*/
+*/
 ///*	
 	public ArrayList<ReservationVO> LeftReserve(int plexNo) {
 		Connection conn = null;
@@ -282,13 +304,14 @@ public class PlexDAO {
 		int result = 0;
 		try {
 			conn = DBConnection.getConnection();
-			String sql = "update Plex " + "set name = ?, C = ?, R = ?"
+			String sql = "update Plex " + "set PlexNo = ?, name = ?, C = ?, R = ?"
 					+ "where PlexNo = ?";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, vo.getName());
-			pstmt.setInt(2, vo.getColumn());
-			pstmt.setInt(3, vo.getRow());
-			pstmt.setInt(4, vo.getPlexNo());
+			pstmt.setInt(1, vo.getPlexNo());
+			pstmt.setString(2, vo.getName());
+			pstmt.setInt(3, vo.getColumn());
+			pstmt.setInt(4, vo.getRow());
+			pstmt.setInt(5, vo.getPlexNo());
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -30,13 +30,14 @@ public class PlexMenu {
 	// }
 
 	public PlexMenu() {
+		//TODO
 		//상영관 수정(이름변경 제외)과 삭제시 상영관에서 상영중인 영화의 티켓들을 취소해야 됨
 		//상영관의 시청여부는 티켓과 현재시간을 비교하여 판단
 		do {
 			System.out.println("상영관 관리 페이지");
 			System.out.println("MENU \n0.상영관 조회\n1.상영관 관리\n2.종료하기");
 			Scanner scan = new Scanner(System.in);
-			String menu = scan.nextLine();
+			String menu = scan.next();
 			if (menu.equals("0")) {
 				// 전체 상영관 목록
 				PlexList();
@@ -44,7 +45,7 @@ public class PlexMenu {
 			} else if (menu.equals("1")) {
 				// 상영관 관리
 				System.out.println("1.상영관 관리 \na:등록, b:수정, c:삭제, d: 상영관 좌석 출력");
-				String submenu = scan.nextLine();
+				String submenu = scan.next();
 
 				if (submenu.equals("a")) {
 					//PlexList();
@@ -229,11 +230,19 @@ public class PlexMenu {
 		String name;
 		int rows;
 		int column;
+		int plexNO;
 		try {
+		PlexDAO pdao = new PlexDAO();
 		Scanner scan = new Scanner(System.in);
 		System.out.println("상영관 등록 페이지");
+		System.out.println("상영관 번호: ");
+		plexNO = scan.nextInt();
+		if(pdao.IsExist(plexNO)) {
+			System.out.println("이미 존재하는 상영관 번호입니다.");
+			return -1;
+		}
 		System.out.println("상영관 이름: ");
-		name = scan.nextLine();
+		name = scan.next();
 		if(name.length() > 12) {
 			Exception e = new Exception();
 			throw e;
@@ -253,7 +262,7 @@ public class PlexMenu {
 		}
 		vo.setColumn(column);
 		vo.setRow(rows);
-		PlexDAO pdao = new PlexDAO();
+		//PlexDAO pdao = new PlexDAO();
 		pdao.regPlex(vo);
 		System.out.println();
 		return 1;
@@ -322,10 +331,4 @@ public class PlexMenu {
 	     }
 	    return false;
 	  }
-	
-	//public String conInput(String msg) {
-	//	System.out.print(msg + " :");
-	//	return scan.nextLine();
-	//}
-
 }
