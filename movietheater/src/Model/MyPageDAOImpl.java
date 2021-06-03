@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class MyPageDAOImpl implements MyPageDAO{
 	
-	//정보 수정 세분화
     private static final String driver = "oracle.jdbc.driver.OracleDriver";
     private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private static final String user = "scott";
@@ -40,30 +39,22 @@ public class MyPageDAOImpl implements MyPageDAO{
 		}	
     }
     
-    
-
+	
 	@Override
 	public void viewMember(MyPageVO mp) {
 		// TODO 내 정보 조회
-		String PW = mp.getPw();
-		String ID = mp.getId();
-
 		try {
 
 			connDB();
-
+			
+			String ID = mp.getId();
+			
 			String query = "SELECT ID, NAME, BIRTH FROM MYPAGE WHERE ID = ?";
 			//실행 쿼리
-
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
-			Scanner sc = new Scanner(System.in);//입력
-			String viewID;
-			viewID = sc.next();
-
-			pstmt.setString(1, viewID);
+			pstmt.setString(1, ID);
 			ResultSet rs = pstmt.executeQuery();
-			
 			
 			while(rs.next()) {//rs.next() 출력
 				String id = rs.getString("ID");
@@ -74,8 +65,6 @@ public class MyPageDAOImpl implements MyPageDAO{
 									", 생년월일 : " + birth);
 			}
 			
-			
-
 			closeDB();
 
 		} catch (Exception e) {
@@ -85,42 +74,26 @@ public class MyPageDAOImpl implements MyPageDAO{
 	}
 
 
-
 	@Override
 	public void modifyMember(MyPageVO mp) {
 		// TODO 정보 수정
-
-		String PW = mp.getPw();
-		String name = mp.getName();
-		String birth = mp.getBirth();
-		String ID = mp.getId();
-
 		try {
 
 			connDB();
 
-		String query = "UPDATE MYPAGE SET PW = ?, NAME = ?, BIRTH = ? WHERE ID = ?";
-		System.out.println(query);
+			String query = "UPDATE MYPAGE SET PW = ?, NAME = ?, BIRTH = ? WHERE ID = ?";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
-			// 뭐를 업데이트 해야하는지?
 			
-
-			System.out.println("해당 아이디");
-			String whereID = mp.getId();
-			System.out.println("수정할 비번");
-			String setPW = mp.getPw();
-			System.out.println("수정할 이름");
-			String setName = mp.getName();
-			System.out.println("수정할 생일");
-			String setBirth = mp.getBirth();
-
+			String whereID = mp.getId();//해당 아이디
+			String setPW = mp.getPw();//수정할 비번
+			String setName = mp.getName();//수정할 이름
+			String setBirth = mp.getBirth();//수정할 생일
 
 			pstmt.setString(4, whereID);
 			pstmt.setString(1, setPW);
 			pstmt.setString(2, setName);
 			pstmt.setString(3, setBirth);
-
 
 			pstmt.executeUpdate();
 
@@ -132,27 +105,22 @@ public class MyPageDAOImpl implements MyPageDAO{
 	}
 
 
-
 	@Override
 	public void deleteMember(MyPageVO mp) {
 		// TODO 회원 탈퇴
-		String PW = mp.getPw();
-		String ID = mp.getId();
-
 		try {
 
 			connDB();
-
+			
 			String query = "DELETE FROM MYPAGE WHERE ID = ? AND PW = ?";
 			
 			PreparedStatement pstmt = con.prepareStatement(query);
 				
-			Scanner sc = new Scanner(System.in);//입력
-			String delID = "";
-			String delPW = "";
+			String delID = mp.getId();
+			String delPW = mp.getPw();
 				
 			pstmt.setString(1, delID);//입력한 걸 저장
-			pstmt.setString(1, delPW);
+			pstmt.setString(2, delPW);
 
 			pstmt.executeUpdate();//처리
 
@@ -162,6 +130,8 @@ public class MyPageDAOImpl implements MyPageDAO{
 			e.getMessage();
 		}
 	}
+	
+	
 	
 	//아이디 중복 검사
 	public int redupleID(String id) {
@@ -174,20 +144,16 @@ public class MyPageDAOImpl implements MyPageDAO{
 		try {
 
 			PreparedStatement pstmt = con.prepareStatement(query);
-			
 			pstmt.setString(1, id);
-			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next() == true) {
 				cntID = rs.getInt("cnt");
-			}
-//				cnt가 1이면 중복 0이면 안 중복
+			} //cnt가 1이면 중복 0이면 안 중복
 			
 			closeDB();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -195,50 +161,7 @@ public class MyPageDAOImpl implements MyPageDAO{
 		
 	}
 	
-	//비번 이름 생일 변경
-	public void updatePW(MyPageVO mp) {
-		String PW = mp.getPw();
-
-		try {
-
-			connDB();
-
-		String query = "UPDATE MYPAGE SET PW = ? WHERE ID = ?";
-		System.out.println(query);
-
-			PreparedStatement pstmt = con.prepareStatement(query);
-			// 뭐를 업데이트 해야하는지?
-			
-
-			System.out.println("해당 아이디");
-			String whereID = mp.getId();
-			System.out.println("수정할 비번");
-			String setPW = mp.getPw();
-
-			pstmt.setString(4, whereID);
-			pstmt.setString(1, setPW);
-
-			pstmt.executeUpdate();
-
-			closeDB();
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-	}
-	
-	public void updateName() {
-		
-	}
-	
-	public void updateBirth() {
-		
-	}
-	
-	
-	
-	
-    public void connDB(){
+	public void connDB(){
         try {
             Class.forName(driver);
             con = DriverManager.getConnection(url,user,pw);
@@ -250,6 +173,7 @@ public class MyPageDAOImpl implements MyPageDAO{
     
 	public void closeDB() {
 		try {
+			rs.close();
 			state.close();
 			con.close();
 		} catch (SQLException e) {

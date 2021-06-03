@@ -72,19 +72,33 @@ public class MyPageUI {
 		userMain();
 	}
 	
-
-
+	private static void imsiLogin() {
+		System.out.println("순서대로 아이디");
+		String lid = sc.nextLine();
+		System.out.println("비번");
+		String lpw = sc.nextLine();
+		System.out.println("이름");
+		String lname = sc.nextLine();
+		System.out.println("생일");
+		String lbirth = sc.nextLine();
+		
+		mp.setId(lid);
+		mp.setPw(lpw);
+		mp.setName(lname);
+		mp.setBirth(lbirth);
+	}
 
 //내 정보 조회
 	public static void viewMember() {
 		
-		String id = "a123123123a123123123";
-		String name = "김나나";
-		String birth = "950120";
+		if (mp.getId() == null) { //로그인
+			imsiLogin();
+		}
 		
-//		String id = mp.getId();//로그인된 아이디에서 값받아오는법?
-//		String name = mp.getName();
-//		String birth = mp.getBirth();
+		
+		String id = mp.getId();
+		String name = mp.getName();
+		String birth = mp.getBirth();
 		System.out.println("---------====마이 페이지====--------");
 		System.out.println("\t▶ ID : " + id);
 		System.out.println("\t▶ 이름 : " + name);
@@ -98,6 +112,7 @@ public class MyPageUI {
 		
 		while(true) {
 			String menu = sc.nextLine();
+			System.out.println();
 			menu:switch(menu) {
 				case "1" :
 					modifyMember();
@@ -112,7 +127,6 @@ public class MyPageUI {
 					break;
 					
 				default :
-					System.out.print("메뉴를 입력하세요 >");
 					break menu;
 			}
 		}
@@ -120,47 +134,35 @@ public class MyPageUI {
 	
 //내 정보 수정
 	public static void modifyMember() {
-		System.out.println("===내 정보 수정===");
-		System.out.println("비밀번호 변경(1) │ 이름 변경(2) │ 생일 변경(3) │ 뒤로 가기(0)");
-		System.out.print("메뉴를 입력하세요 >");
+		System.out.println("--------====내 정보 수정====--------");
 
-		while(true) {
-		int menu = sc.nextInt();
-		menu: switch(menu) {
-			case 1 :
-				System.out.println("비밀번호 변경");
-//				updatePW();
-				String setPW =sc.nextLine();
-				mp.setPw(setPW);
-				break;
-			case 2 :
-				System.out.println("이름 변경");
-//				updateName();
-				String setName = sc.nextLine();
-				mp.setName(setName);
-				break;
-			case 3 : 
-				System.out.println("생일 변경");
-//				updateBirth();
-				String setBirth = sc.nextLine();
-				mp.setBirth(setBirth);
-				break;
-			case 0 :
-				System.out.println("뒤로 가기");
-				viewMember();
-				break;
-			default :
-				System.out.println("메뉴를 입력하세요 >");
-				break menu;
-			}
-		}
+				System.out.println("수정할 정보를 입력하세요");
+				
+				System.out.print("\t▶ PW : ");
+				String PW = sc.nextLine();
+				mp.setPw(PW);
+				
+				System.out.print("\t▶ 이름 : ");
+				String name = sc.nextLine();
+				mp.setName(name);
+				
+				System.out.print("\t▶ 생일 : ");
+				String birth = sc.nextLine();
+				mp.setBirth(birth);
+								
+				dao.modifyMember(mp);
+
+				viewMember();//정보 조회 화면으로 돌아감
+
 	}
 	
 //회원 탈퇴
 	public static void deleteMember() {
-		String pw = "a456456";
 		
-		System.out.println("====회원 탈퇴====");
+		String id = mp.getId();
+		String pw = mp.getPw();
+		
+		System.out.println("----------====회원탈퇴====----------");
 		System.out.println("탈퇴하시려면 비밀번호를 입력하세요");
 		System.out.println("내 정보 조회로 돌아가시려면 0을 입력하세요");
 		
@@ -172,22 +174,21 @@ public class MyPageUI {
 			String back = "0";//뒤로 가기
 			if(inputPW.equals(back)) {
 				System.out.println("────────────────────────────────");
+				System.out.println();
 				viewMember();
 				break;
 			}
 
-//			if (!inputPW.equals(mp.getPw())) {
 			if (!inputPW.equals(pw)) {
 				System.out.println("비밀번호가 일치하지 않습니다");
-				System.out.println("----------------------------------");
+				System.out.println("---------------------------------");
 			} else {
+				
+				dao.deleteMember(mp); //DB에서 삭제
 				System.out.println("비밀번호가 일치합니다");
-				dao.deleteMember(mp);
 				System.out.println("탈퇴되었습니다");
-				//DB에서 삭제
-				//회원 메인
 				System.out.println("────────────────────────────────");
-				userMain();
+				userMain(); //회원 메인
 				
 				break;//반복문 탈출
 			}
@@ -261,7 +262,6 @@ public class MyPageUI {
 	public static void main(String[] args) {
 //		signUpMember();
 		viewMember();
-		
 	}
 
 }
