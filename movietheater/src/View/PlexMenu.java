@@ -181,6 +181,9 @@ public class PlexMenu {
 		System.out.println();
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
+			if(j == 0) {
+				System.out.print(i+1);
+			}
 			char cchar = (char)('a'+j);
 			String seat = "" + cchar + (i+1);
 			System.out.print(" ");
@@ -208,6 +211,9 @@ public class PlexMenu {
 		System.out.println();
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
+			if(j == 0) {
+				System.out.print(i+1);
+			}
 			char cchar = (char)('a'+j);
 			String seat = "" + cchar + (i+1);
 			System.out.print(" ");
