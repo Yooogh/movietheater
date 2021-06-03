@@ -1,9 +1,8 @@
 package View;
 
 
-import Model.ReservationDAO;
+import Controller.ReservationController;
 import Model.ReservationVO;
-import Service.ReservationService;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
@@ -14,7 +13,7 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class ReservationView{
 
-    private final ReservationService reservationService;
+    private final ReservationController reservationController;
 
     public void setMovie(){
         String []movie = {};
@@ -104,7 +103,7 @@ public class ReservationView{
         reserve.setTotalPrice(selectPeople * 10000);
         reserve.setUserId(userId);
 
-        reservationService.save(reserve);
+        reservationController.save(reserve);
         scanner.close();
 
     }
@@ -115,7 +114,7 @@ public class ReservationView{
         System.out.println("1을 누르면 돌아갑니다.");
         System.out.println("=========================================");
         int select = 0;
-        List<ReservationVO> test = reservationService.findAll("test2");
+        List<ReservationVO> test = reservationController.findAll("test2");
 
         if(test.isEmpty())
             return;
@@ -137,7 +136,7 @@ public class ReservationView{
         Scanner scanner = new Scanner(System.in);
         System.out.println("예약을 취소합니다.");
         Long select = 0L;
-        List<ReservationVO> test = reservationService.findAll("test2");
+        List<ReservationVO> test = reservationController.findAll("test2");
 
         if(test.isEmpty())
             return;
@@ -153,14 +152,14 @@ public class ReservationView{
         System.out.print("예약번호를 입력하세요 : ");
         select = scanner.nextLong();
 
-        reservationService.remove(select);
+        reservationController.remove(select);
 
     }
 
     public void ReservationDelete(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("전체 예약을 취소합니다.");
-        reservationService.deleteAll();
+        reservationController.deleteAll();
 
     }
 
