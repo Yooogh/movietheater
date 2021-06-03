@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class MovieExe {
 
-	public static void main(String[] args) {
+	public void Movieadd() {
 		MovieDAOIplm MDI = new MovieDAOIplm();
 		Scanner sc = new Scanner(System.in);
 		boolean bool = true;
@@ -75,24 +75,10 @@ public class MovieExe {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				System.out.println(mvvo.getTitle());
-				System.out.println(mvvo.getDirector());
-				System.out.println(mvvo.getGenre());
-				System.out.println(mvvo.getRate());
-
-				String mvTitle = sc.next();
-				MovieVO movieVO = new MovieVO();
-				try {
-					movieVO = MDI.searchMovie(mvTitle);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-
-				System.out.println("영화 제목: " + movieVO.getTitle());
-				System.out.println("영화 감독: " + movieVO.getDirector());
-				System.out.println("영화 장르: " + movieVO.getGenre());
-				System.out.println("영화 등급: " + movieVO.getRate());
-
+				System.out.println("영화 이름: " + mvvo.getTitle());
+				System.out.println("영화 감독: " + mvvo.getDirector());
+				System.out.println("영화 장르: " + mvvo.getGenre());
+				System.out.println("영화 등급: " + mvvo.getRate());
 
 				break;
 
