@@ -2,13 +2,38 @@ package Model;
 
 import java.util.Scanner;
 
+import View.ReservationView;
+
+//import View.*;
+
+
 public class MyPageUI {
 	private Scanner sc = new Scanner(System.in);
 	private MyPageDAOImpl dao = new MyPageDAOImpl();
+	ReservationView rv = new ReservationView();
 	
 //고객 메인
-	public void userMain() {
-		System.out.println("메인화면뿅");
+	public void userMain(MyPageVO mp) {
+		
+		
+		System.out.println("--------=====고객화면=====--------");
+		System.out.println("\t1. 마이 페이지");
+		System.out.println("\t2. 영화 예매");
+		System.out.println("--------------------------------");
+		System.out.print("메뉴를 입력하세요 > ");
+		
+		
+		int menu = sc.nextInt();
+		switch(menu) {
+			case 1 :
+				System.out.println("────────────────────────────────\n");
+				viewMember(mp);
+				break;
+			case 2 :
+				System.out.println("────────────────────────────────\n");
+				rv.mainMenu();
+				break;
+		}
 	}
 
 	
@@ -67,38 +92,41 @@ public class MyPageUI {
 		System.out.println("회원가입 되었습니다.");
 		
 		//회원 메인으로
-		userMain();
+		userMain(mp);
 	}
 	
-	private void imsiLogin() {
+	
+	public MyPageVO loginMember() {
 		MyPageVO mp = new MyPageVO();
-		System.out.println("순서대로 아이디");
-		String lid = sc.nextLine();
-		System.out.println("비번");
-		String lpw = sc.nextLine();
-		System.out.println("이름");
-		String lname = sc.nextLine();
-		System.out.println("생일");
-		String lbirth = sc.nextLine();
 		
-		mp.setId(lid);
-		mp.setPw(lpw);
-		mp.setName(lname);
-		mp.setBirth(lbirth);
+		System.out.println("-----------====로그인====----------");
+		System.out.print("\t▶ ID : ");
+		String id = sc.nextLine();
+		System.out.print("\t▶ PW : ");
+		String pw = sc.nextLine();
+		
+		mp = dao.loginMember(id, pw);
+		
+		
+		if(mp != null) {
+			userMain(mp);
+		} else {
+			System.out.println("아이디 또는 비밀번호가 일치하지 않습니다.");
+		}
+		
+		return mp;
 	}
 
 //내 정보 조회
-	public void viewMember() {
-		MyPageVO mp = new MyPageVO();
-		if (mp.getId() == null) { //로그인
-			imsiLogin();
-		}
-
-		String id = mp.getId();
+	public MyPageVO viewMember(MyPageVO mp) {
+		
+		String ID = mp.getId();
 		String name = mp.getName();
 		String birth = mp.getBirth();
+		
+		
 		System.out.println("---------====마이 페이지====--------");
-		System.out.println("\t▶ ID : " + id);
+		System.out.println("\t▶ ID : " + ID);
 		System.out.println("\t▶ 이름 : " + name);
 		System.out.println("\t▶ 생일 : " + birth);
 		System.out.println("──────────────────────────────────");
@@ -113,15 +141,15 @@ public class MyPageUI {
 			System.out.println();
 			menu:switch(menu) {
 				case "1" :
-					modifyMember();
+					modifyMember(mp);
 					break;
 			
 				case "2" :
-					deleteMember();
+					deleteMember(mp);
 					break;
 					
 				case "0" :
-					userMain();
+					userMain(mp);
 					break;
 					
 				default :
@@ -130,41 +158,40 @@ public class MyPageUI {
 		}
 	}
 	
-//내 정보 수정
-	public void modifyMember() {
-		MyPageVO mp = new MyPageVO();
+//내 정보 수정	
+	public void modifyMember(MyPageVO mp) {
+
 		System.out.println("--------====내 정보 수정====--------");
-
-				System.out.println("수정할 정보를 입력하세요");
-				
-				System.out.print("\t▶ PW : ");
-				String PW = sc.nextLine();
-				mp.setPw(PW);
-				
-				System.out.print("\t▶ 이름 : ");
-				String name = sc.nextLine();
-				mp.setName(name);
-				
-				System.out.print("\t▶ 생일 : ");
-				String birth = sc.nextLine();
-				mp.setBirth(birth);
-								
-				dao.modifyMember(mp);
-
-				viewMember();//정보 조회 화면으로 돌아감
-
+		System.out.println("수정할 정보를 입력하세요");
+		
+		System.out.print("\t▶ PW : ");
+		String PW = sc.nextLine();
+		mp.setPw(PW);
+		
+		
+		System.out.print("\t▶ 이름 : ");
+		String name = sc.nextLine();
+		mp.setName(name);
+		
+		System.out.print("\t▶ 생일 : ");
+		String birth = sc.nextLine();
+		mp.setBirth(birth);
+		
+		dao.modifyMember(mp);
+		
+		viewMember(mp);//정보 조회 화면으로 돌아감
+		
 	}
+
 	
 //회원 탈퇴
-	public void deleteMember() {
-		MyPageVO mp = new MyPageVO();
+	public void deleteMember(MyPageVO mp) {
 		String id = mp.getId();
 		String pw = mp.getPw();
 		
 		System.out.println("----------====회원탈퇴====----------");
 		System.out.println("탈퇴하시려면 비밀번호를 입력하세요");
 		System.out.println("내 정보 조회로 돌아가시려면 0을 입력하세요");
-		
 		
 		do {
 			System.out.print("▶ 비밀번호 입력 : ");
@@ -174,7 +201,7 @@ public class MyPageUI {
 			if(inputPW.equals(back)) {
 				System.out.println("────────────────────────────────");
 				System.out.println();
-				viewMember();
+				viewMember(mp);
 				break;
 			}
 
@@ -187,7 +214,7 @@ public class MyPageUI {
 				System.out.println("비밀번호가 일치합니다");
 				System.out.println("탈퇴되었습니다");
 				System.out.println("────────────────────────────────");
-				userMain(); //회원 메인
+				userMain(mp); //회원 메인
 				
 				break;//반복문 탈출
 			}

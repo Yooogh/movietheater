@@ -11,12 +11,12 @@ public class MyPageDAOImpl implements MyPageDAO{
     private static final String pw = "tiger";
     private Connection con;
     private Statement state;
-    private ResultSet rs;
     
 	@Override
 	public void signUpMember(MyPageVO mp) {
 		// TODO 회원 가입
     	connDB();
+    	ResultSet rs = null;
     	
     	String id = mp.getId();
     	String pw = mp.getPw();
@@ -41,41 +41,62 @@ public class MyPageDAOImpl implements MyPageDAO{
 		}	
     }
     
+	public MyPageVO loginMember(String id, String pw) {
+		connDB();
+		ResultSet rs = null;
+		
+		MyPageVO mp = new MyPageVO();
+		
+		String query = "SELECT * FROM  MYPAGE where ID = ? and PW = ?";
+		//쿼리
+		
+		try {
+			PreparedStatement pstmt = con.prepareStatement(query);//con으로부터 가져옴
+			pstmt.setString(1, id); //?에 값 넣기
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();//쿼리 실행
+			
+			if(rs.next()) {//다음것이 있는지 true false 반환
+				mp.setId(rs.getString("ID"));
+				mp.setPw(rs.getString("PW"));
+				mp.setName(rs.getString("NAME"));
+				mp.setBirth(rs.getString("BIRTH"));
+			}
+				if(!rs.getString(2).equals(pw)) //실행 비번과 접속시도 비번 맞으면 성공
+					return null;//로그인 성공
+							
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mp;//데이터베이스 오류
+		//없으면 null
+	}
+	
 	
 	@Override
-	public void viewMember(MyPageVO mp) {
+	public MyPageVO viewMember(String ID) throws Exception {
 		// TODO 내 정보 조회
 			connDB();
+			MyPageVO mp = new MyPageVO();
 			
-			String ID = mp.getId();
-			
-			String query = "SELECT ID, NAME, BIRTH FROM MYPAGE WHERE ID = ?";
-			//실행 쿼리
-		try {
+			String query = "SELECT ID, NAME, BIRTH FROM MYPAGE WHERE ID LIKE ?";
 			PreparedStatement pstmt = con.prepareStatement(query);
-			
 			pstmt.setString(1, ID);
-			ResultSet rs = pstmt.executeQuery();
 			
-			while(rs.next()) {//rs.next() 출력
-				String id = rs.getString("ID");
-				String name = rs.getString("NAME");
-				String birth = rs.getString("BIRTH");
-				System.out.println("ID : " + ID +
-									", 이름 : " + name +
-									", 생년월일 : " + birth);
+			ResultSet rs = null;
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			mp.setId(rs.getString("id"));
+			mp.setName(rs.getString("name"));
+			mp.setBirth(rs.getString("birth"));
 
-				MyPageVO myPageVO = new MyPageVO();
-				myPageVO.setId(id);
+			rs.close();
+			state.close();
+			con.close();
 
-				rs.close();
-				state.close();
-				con.close();
-			}
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
+		return mp;
 		
 	}
 
@@ -86,20 +107,16 @@ public class MyPageDAOImpl implements MyPageDAO{
 		try {
 
 			connDB();
-
+			ResultSet rs = null;
+			
 			String query = "UPDATE MYPAGE SET PW = ?, NAME = ?, BIRTH = ? WHERE ID = ?";
 
 			PreparedStatement pstmt = con.prepareStatement(query);
 			
-			String whereID = mp.getId();//해당 아이디
-			String setPW = mp.getPw();//수정할 비번
-			String setName = mp.getName();//수정할 이름
-			String setBirth = mp.getBirth();//수정할 생일
-
-			pstmt.setString(4, whereID);
-			pstmt.setString(1, setPW);
-			pstmt.setString(2, setName);
-			pstmt.setString(3, setBirth);
+			pstmt.setString(1, mp.getPw());
+			pstmt.setString(2, mp.getName());
+			pstmt.setString(3, mp.getBirth());
+			pstmt.setString(4, mp.getId());
 
 			pstmt.executeUpdate();
 
@@ -117,16 +134,14 @@ public class MyPageDAOImpl implements MyPageDAO{
 		try {
 
 			connDB();
+			ResultSet rs = null;
 			
 			String query = "DELETE FROM MYPAGE WHERE ID = ? AND PW = ?";
 			
 			PreparedStatement pstmt = con.prepareStatement(query);
-				
-			String delID = mp.getId();
-			String delPW = mp.getPw();
-				
-			pstmt.setString(1, delID);//입력한 걸 저장
-			pstmt.setString(2, delPW);
+								
+			pstmt.setString(1, mp.getId());//입력한 걸 저장
+			pstmt.setString(2, mp.getPw());
 
 			pstmt.executeUpdate();//처리
 
@@ -144,6 +159,7 @@ public class MyPageDAOImpl implements MyPageDAO{
 	public int redupleID(String id) {
 		
 		connDB();
+		ResultSet rs = null;
 		
 		int cntID = 0;
 		String query = "select count(id) as cnt from mypage where id = ?";
