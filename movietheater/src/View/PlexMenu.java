@@ -2,6 +2,7 @@ package View;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import VO.MemberVO;
@@ -17,7 +18,7 @@ public class PlexMenu {
 	//ArrayList<ReservationVO> rlist = new ArrayList< ReservationVO >();
 
 
-	Scanner scan = new Scanner(System.in);
+	//Scanner scan = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		new PlexMenu();
@@ -33,7 +34,8 @@ public class PlexMenu {
 		//상영관의 시청여부는 티켓과 현재시간을 비교하여 판단
 		do {
 			System.out.println("상영관 관리 페이지");
-			System.out.println("\n \t MENU \t 0.상영관 조회 1.상영관 관리 2.종료하기");
+			System.out.println("MENU \n0.상영관 조회\n1.상영관 관리\n2.종료하기");
+			Scanner scan = new Scanner(System.in);
 			String menu = scan.nextLine();
 			if (menu.equals("0")) {
 				// 전체 상영관 목록
@@ -41,14 +43,15 @@ public class PlexMenu {
 
 			} else if (menu.equals("1")) {
 				// 상영관 관리
-				System.out.println("1.상영관 관리 a:등록, b:수정, c:삭제, d: 상영관 좌석 출력");
+				System.out.println("1.상영관 관리 \na:등록, b:수정, c:삭제, d: 상영관 좌석 출력");
 				String submenu = scan.nextLine();
 
 				if (submenu.equals("a")) {
 					//PlexList();
-					PlexRegister();
+					if(PlexRegister() == 1) {
 					System.out.println("새로운 상영관이 등록되었습니다.");
 					PlexList();
+					}
 				} else if (submenu.equals("b")) {
 					PlexList();
 					PlexEdit();
@@ -63,7 +66,7 @@ public class PlexMenu {
 					PlexPrintMenu();
 					System.out.println("좌석을 출력했습니다.");
 				} else {
-
+					System.out.println("에러");
 				}
 
 			} else if (menu.equals("2")) {
@@ -71,7 +74,7 @@ public class PlexMenu {
 				System.out.println("프로그램이 종료되었습니다."); // 종료
 				break;
 			} else {
-
+				System.out.println("에러");
 			}
 
 		} while (true);
@@ -108,12 +111,22 @@ public class PlexMenu {
 
 	public void PlexPrintMenu(){
 		System.out.println("상영관 번호를 입력해주세요:");
+		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
 		//PlexVO vo = pdao.selectByNo(plexNo);
 		//if(vo != null) {
 		if(pdao.IsExist(plexNo)){
 			PlexPrint(plexNo);
+			//printLeft 테스트용
+			/*
+			ArrayList <String> takednSeat = new ArrayList<String>();
+			takednSeat.add("a1");
+			takednSeat.add("b1");
+			takednSeat.add("c2");
+			takednSeat.add("d4");
+			printLeft(plexNo,takednSeat);
+			*/
 		}else {
 			System.out.println("상영관 번호를 잘못 입력하였습니다. 다시 입력하세요.");
 		}
@@ -143,7 +156,8 @@ public class PlexMenu {
 		}
 	}
 	
-	
+
+/*	
 	public void PlexPrint2(int plexNO, LocalDate ReserveDay, String reserveTime) {
 		System.out.println("좌석 배치 출력");
 		PlexDAO pdao = new PlexDAO();
@@ -166,8 +180,8 @@ public class PlexMenu {
 		System.out.println();
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
-			char cchar = (char)('a'+c);
-			String seat = "" + cchar + r;
+			char cchar = (char)('a'+j);
+			String seat = "" + cchar + (i+1);
 			System.out.print(" ");
 			if(takednSeat.contains(seat)) {
 				System.out.print("X");
@@ -177,31 +191,82 @@ public class PlexMenu {
 			
 		}
 	}
+*/	
+	public void printLeft(int plexNO, ArrayList <String> takednSeat) {
+		System.out.println("좌석 배치 출력");
+		PlexDAO pdao = new PlexDAO();
+		PlexVO pvo = pdao.selectByNo(plexNO);
+		int r = pvo.getRow();
+		int c = pvo.getColumn();
+		ReservationDAO rdao = new ReservationDAO();
+		for (int i = 0; i < c; i++) {
+			char k = (char)('a'+i);
+			System.out.print(" ");
+			System.out.print(k);
+		}
+		System.out.println();
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+			char cchar = (char)('a'+j);
+			String seat = "" + cchar + (i+1);
+			System.out.print(" ");
+			String a = new String();
+			//if(takednSeat.contains(seat)) {
+			if(containsCaseInsensitive(seat,takednSeat)) {
+				System.out.print("X");
+			}else 
+				System.out.print("O");
+			}
+			System.out.println();
+			//System.out.println(seat);
+		//}
+		}
+	}
 	
-	public void PlexRegister() {
+	public int PlexRegister() {
 		//들어올 수 있는 값인지 확인해줘야 함
 		PlexVO vo = new PlexVO();
 		String name;
 		int rows;
 		int column;
+		try {
+		Scanner scan = new Scanner(System.in);
 		System.out.println("상영관 등록 페이지");
 		System.out.println("상영관 이름: ");
 		name = scan.nextLine();
+		if(name.length() > 12) {
+			Exception e = new Exception();
+			throw e;
+		}
 		vo.setName(name);
 		System.out.println("좌석 열의 개수: ");
 		column = scan.nextInt();
+		if(name.length() > 20) {
+			Exception e = new Exception();
+			throw e;
+		}
 		System.out.println("좌석 행의 개수: ");
 		rows = scan.nextInt();
+		if(name.length() > 20) {
+			Exception e = new Exception();
+			throw e;
+		}
 		vo.setColumn(column);
 		vo.setRow(rows);
 		PlexDAO pdao = new PlexDAO();
 		pdao.regPlex(vo);
 		System.out.println();
+		return 1;
+		}catch(Exception e) {
+			System.out.println("잘못된 값을 입력했습니다. 처음부터 다시 시도해주세요");
+			return -1;
+		}
 	}
 	
 	private void PlexEdit() {
 		System.out.println("상영관 수정");
 		System.out.println("수정할 상영관 번호를 입력해주세요.");
+		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
 		PlexVO vo = pdao.selectByNo(plexNo);
@@ -240,6 +305,7 @@ public class PlexMenu {
 	
 
 	private void PlexRemove() {
+		Scanner scan = new Scanner(System.in);
 		System.out.println("상영관 삭제");
 		System.out.println("삭제할 상영관 번호를 입력하세요");
 		int plexNo = scan.nextInt();
@@ -247,7 +313,16 @@ public class PlexMenu {
 		pdao.delete(plexNo);
 
 	}
-
+	
+	public boolean containsCaseInsensitive(String s, List<String> l){
+	     for (String string : l){
+	        if (string.equalsIgnoreCase(s)){
+	            return true;
+	         }
+	     }
+	    return false;
+	  }
+	
 	//public String conInput(String msg) {
 	//	System.out.print(msg + " :");
 	//	return scan.nextLine();

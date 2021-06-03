@@ -257,7 +257,7 @@ public class PlexDAO {
 		try {
 			conn = DBConnection.getConnection();
 			stmt = conn.createStatement();
-			String sql = "select * from Plex";
+			String sql = "select * from Plex order by PlexNo";
 			rs = stmt.executeQuery(sql);
 			list = new ArrayList<PlexVO>();
 			while (rs.next()) {
