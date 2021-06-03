@@ -70,6 +70,17 @@ public class ReservationController {
         return total;
     }
 
+    public int getSalesByMovie(String movieName){
+        int total = 0;
+        try {
+            total = reserveDAO.getSalesByMovie(movieName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return total;
+    }
+
     public void loadTheater(){
         //Theater 가져오는 메소드
     }
