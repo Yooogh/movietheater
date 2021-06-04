@@ -1,7 +1,5 @@
 package View;
 
-import Model.MyPageUI;
-
 import java.util.Scanner;
 
 public class SelectScreen {
@@ -23,7 +21,7 @@ public class SelectScreen {
 
             switch(i){
                 case "1":
-                    myPageUI.viewMember();
+                    myPageUI.loginMember();
                     continue;
 
                 case "2":

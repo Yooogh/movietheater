@@ -2,6 +2,7 @@ package View;
 
 
 import Controller.ReservationController;
+import Model.MyPageVO;
 import Model.ReservationVO;
 import lombok.RequiredArgsConstructor;
 
@@ -10,22 +11,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-@RequiredArgsConstructor
 public class ReservationView{
 
-    private final ReservationController reservationController;
+    private ReservationController reservationController = new ReservationController();
 
     public void setMovie(){
         String []movie = {};
     }
 
 
-    public void mainMenu() {
+    public void mainMenu(MyPageVO myPageVO) {
+        MyPageUI myPageUI = new MyPageUI();
         Scanner scanner = new Scanner(System.in);
         int select = 0;
         System.out.println("예약시스템을 시작합니다.");
         System.out.println("=========== 메뉴 선택 ===========");
-        System.out.println("1. 예약하기 2. 예약확인 3. 예약취소");
+        System.out.println("1. 예약하기 2. 예약확인 3. 예약취소 4.돌아가기");
         select = scanner.nextInt();
 
         while(!(select ==1 || select ==2 || select == 3 || select == 4)){
@@ -35,7 +36,7 @@ public class ReservationView{
 
         switch (select){
             case 1:
-                ReservationCMD();
+                ReservationCMD(myPageVO);
                 break;
             case 2:
                 ReservationCheck();
@@ -44,7 +45,7 @@ public class ReservationView{
                 ReservationCancel();
                 break;
             case 4:
-                ReservationDelete();
+                myPageUI.userMain(myPageVO);
                 break;
         }
 
@@ -52,7 +53,7 @@ public class ReservationView{
 
     }
 
-    public void ReservationCMD(){
+    public void ReservationCMD(MyPageVO myPageVO){
         ReservationVO reserve = new ReservationVO();
 
         Scanner scanner = new Scanner(System.in);
@@ -65,9 +66,8 @@ public class ReservationView{
         int selectSeat = 0;
         int selectPeople = 0;
 
-        Date date = new Date();
 
-        String userId = "test2";
+        String userId = myPageVO.getId();
 
         for(int i = 0 ; i<movie.length; i++){
             System.out.print(movie[i] + "\t");
@@ -105,6 +105,9 @@ public class ReservationView{
 
         reservationController.save(reserve);
         scanner.close();
+        System.out.println("예약이 완료 되었습니다.");
+
+        mainMenu(myPageVO);
 
     }
 

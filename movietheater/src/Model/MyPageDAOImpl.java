@@ -74,27 +74,34 @@ public class MyPageDAOImpl implements MyPageDAO{
 	
 	
 	@Override
-	public MyPageVO viewMember(String ID) throws Exception {
+	public MyPageVO viewMember(String ID) {
 		// TODO 내 정보 조회
 			connDB();
 			MyPageVO mp = new MyPageVO();
 			
 			String query = "SELECT ID, NAME, BIRTH FROM MYPAGE WHERE ID LIKE ?";
-			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, ID);
 			
-			ResultSet rs = null;
-			rs = pstmt.executeQuery();
-			
-			rs.next();
-			
-			mp.setId(rs.getString("id"));
-			mp.setName(rs.getString("name"));
-			mp.setBirth(rs.getString("birth"));
+			try {
+				
+				PreparedStatement pstmt = con.prepareStatement(query);
+				pstmt.setString(1, ID);
+				
+				ResultSet rs = null;
+				rs = pstmt.executeQuery();
+				
+				rs.next();
+				
+				mp.setId(rs.getString("id"));
+				mp.setName(rs.getString("name"));
+				mp.setBirth(rs.getString("birth"));
 
-			rs.close();
-			state.close();
-			con.close();
+				rs.close();
+				state.close();
+				con.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
 		return mp;
 		

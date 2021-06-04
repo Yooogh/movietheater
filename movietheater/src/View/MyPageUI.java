@@ -9,12 +9,11 @@ import Model.MyPageVO;
 public class MyPageUI {
 	private Scanner sc = new Scanner(System.in);
 	private MyPageDAOImpl dao = new MyPageDAOImpl();
-//	ReservationView rv = new ReservationView();
+	ReservationView rv = new ReservationView();
 	
 //고객 메인
 	public void userMain(MyPageVO mp) {
-		
-		
+
 		System.out.println("--------=====고객화면=====--------");
 		System.out.println("\t1. 마이 페이지");
 		System.out.println("\t2. 영화 예매");
@@ -30,7 +29,7 @@ public class MyPageUI {
 				break;
 			case 2 :
 				System.out.println("────────────────────────────────\n");
-//				rv.mainMenu();
+				rv.mainMenu(mp);
 				break;
 		}
 	}
@@ -106,7 +105,7 @@ public class MyPageUI {
 		
 		mp = dao.loginMember(id, pw);
 		
-		
+		//--loginMember 호출해서 MyPageVO 쓰는곳 없으면 return형 void로 바꿔도 될것같아요
 		if(mp != null) {
 			userMain(mp);
 		} else {

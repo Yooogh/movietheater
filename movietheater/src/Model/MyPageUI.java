@@ -14,8 +14,7 @@ public class MyPageUI {
 	
 //고객 메인
 	public void userMain(MyPageVO mp) {
-		
-		
+
 		System.out.println("--------=====고객화면=====--------");
 		System.out.println("\t1. 마이 페이지");
 		System.out.println("\t2. 영화 예매");
@@ -31,7 +30,7 @@ public class MyPageUI {
 				break;
 			case 2 :
 				System.out.println("────────────────────────────────\n");
-				rv.mainMenu();
+				rv.mainMenu(mp);
 				break;
 		}
 	}

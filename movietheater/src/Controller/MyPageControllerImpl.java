@@ -14,9 +14,9 @@ public class MyPageControllerImpl implements MyPageController{
 	}
 
 	@Override
-	public void viewMember(MyPageVO myPageVO) {
+	public void viewMember(String ID) {
 		dao = new MyPageDAOImpl();
-		dao.viewMember(myPageVO);
+		dao.viewMember(ID);
 	}
 
 	@Override
