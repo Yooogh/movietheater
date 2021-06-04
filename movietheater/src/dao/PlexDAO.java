@@ -8,13 +8,31 @@ import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
+import java.sql.DriverManager;
 
 import VO.PlexVO;
 import VO.ReservationVO;
 
 public class PlexDAO {
 	ArrayList<ReservationVO> Rlist = new ArrayList< ReservationVO >();
-
+	
+	private static final String driver = "oracle.jdbc.driver.OracleDriver";
+	private static final String url = "jdbc:oracle:thin:@127.0.0.1:1521:XE";
+	private static final String user = "scott";
+	private static final String pwd = "tiger";
+	public static Connection getConnection() {
+		Connection conn = null;
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url,user,pwd);
+			return conn;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}		
+	}
+	
 	public void close(Statement stmt, ResultSet rs, Connection conn) {
 		try {
 			if (stmt != null)
@@ -46,7 +64,7 @@ public class PlexDAO {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			String sql = "insert into Plex " + "(PlexNo, name, C, R) "
 					+ "values (?,?,?,?)";
 			pstmt = conn.prepareStatement(sql);
@@ -71,7 +89,7 @@ public class PlexDAO {
 		PlexVO vo = null;
 
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Plex where PlexNo = '" + plexNo + "'";
 			rs = stmt.executeQuery(sql);
@@ -101,7 +119,7 @@ public class PlexDAO {
 		ResultSet rs = null;
 		boolean exist = false;
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Plex where PlexNo = '" + plexNo + "'";
 			rs = stmt.executeQuery(sql);
@@ -122,7 +140,7 @@ public class PlexDAO {
 		ResultSet rs = null;
 		boolean exist = false;
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Plex where name = '" + name + "'";
 			rs = stmt.executeQuery(sql);
@@ -142,7 +160,7 @@ public class PlexDAO {
 		Statement stmt = null;
 		int result = 0;
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			String sql = "delete from Plex " + "where PlexNo = '" + plexNo + "'";
 			stmt = conn.createStatement();
 			result = stmt.executeUpdate(sql);
@@ -201,7 +219,7 @@ public class PlexDAO {
 		ArrayList<ReservationVO> list = null;
 
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Reservation where PlexNo = '" + plexNo + "'";
 			rs = stmt.executeQuery(sql);
@@ -236,7 +254,7 @@ public class PlexDAO {
 		ArrayList<ReservationVO> list = null;
 
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			//stmt = conn.createStatement();
 			String sql = "select * from Reservation " + "where plexNo = ? and ReserveDay = ? and reserveTime = ?";
 			ps = conn.prepareStatement(sql);
@@ -276,7 +294,7 @@ public class PlexDAO {
 		ArrayList<PlexVO> list = null;
 
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			stmt = conn.createStatement();
 			String sql = "select * from Plex order by PlexNo";
 			rs = stmt.executeQuery(sql);
@@ -302,7 +320,7 @@ public class PlexDAO {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		try {
-			conn = DBConnection.getConnection();
+			conn = this.getConnection();
 			String sql = "update Plex " + "set PlexNo = ?, name = ?, C = ?, R = ?"
 					+ "where PlexNo = ?";
 			pstmt = conn.prepareStatement(sql);
