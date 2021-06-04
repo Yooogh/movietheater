@@ -3,3 +3,5 @@
 movietheater/movietheater.iml
 movietheater.iml
 movietheater/.metadata/
+out/artifacts/movietheater_jar/movietheater.jar
+movietheater/src/META-INF/MANIFEST.MF
