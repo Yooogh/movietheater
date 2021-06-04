@@ -2,6 +2,8 @@ package View;
 
 import Model.AdminVO;
 import Model.AdminDAO;
+import movieRegister.MovieExe;
+
 import java.util.Scanner;
 
 public class AdminMenu {
@@ -11,11 +13,12 @@ public class AdminMenu {
         SalesInquiry RI = new SalesInquiry();
         AdminVO avo = new AdminVO();
         AdminDAO adao = new AdminDAO();
+        MovieExe ME = new MovieExe();
 
         while (true) {
             System.out.println("==========관리 항목==========");
             System.out.println("1. 상영관 등록");
-            System.out.println("2. 영화 등록");
+            System.out.println("2. 영화 관리");
             System.out.println("3. 회원정보 관리");
             System.out.println("4. 매출 조회");
             System.out.println("5. 관리자 등록");
@@ -24,12 +27,13 @@ public class AdminMenu {
             System.out.print("실행 항목 선택: ");
             String i = sc.nextLine();
 
-            switch(i){      //  실행을 원하는 번호 입력시 해당 항목 실행
+            switch(i){      //  실행을 원하는 번호 입력시 해당 항목 호출하여 실행
 
                 case "1":
                     continue;
 
                 case "2":
+                    ME.Movieadd();      //  Movieadd 메소드 호출 실행
                     continue;
 
                 case "3":
