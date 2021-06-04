@@ -2,7 +2,6 @@ package View;
 
 import Model.AdminVO;
 import Model.AdminDAO;
-import movieRegister.MovieExe;
 
 import java.util.Scanner;
 

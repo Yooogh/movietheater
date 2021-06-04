@@ -1,5 +1,7 @@
-package movieRegister;
+package Model;
 
+
+import Model.MovieVO;
 
 public interface MovieDAO {
 

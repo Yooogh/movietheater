@@ -1,5 +1,7 @@
-package movieRegister;
+package Controller;
 
+
+import Model.MovieVO;
 
 public class MovieMgrIplm implements MovieMgr {
 	

@@ -1,4 +1,7 @@
-package movieRegister;
+package View;
+
+import Model.MovieDAOIplm;
+import Model.MovieVO;
 
 import java.util.Scanner;
 

@@ -1,9 +1,12 @@
-package movieRegister;
+package Model;
+
+import Model.MovieDAO;
+import Model.MovieVO;
 
 import java.sql.*;
 
 
-public class MovieDAOIplm implements MovieDAO{
+public class MovieDAOIplm implements MovieDAO {
 	
 	private static final String driver = "oracle.jdbc.driver.OracleDriver"; 
 	private static final String url = "jdbc:oracle:thin:@localhost:1521:XE"; 
@@ -13,7 +16,7 @@ public class MovieDAOIplm implements MovieDAO{
 	private Statement stmt;
 	private ResultSet rs;	
 
-	public MovieVO searchMovie(String title) throws Exception {   
+	public MovieVO searchMovie(String title) throws Exception {
 		connDB();  
 		MovieVO movieVo = new MovieVO();
 		PreparedStatement pst = con.prepareStatement("SELECT * FROM MOVIE WHERE TITLE LIKE ?" );
