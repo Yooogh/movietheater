@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 
-import VO.MemberVO;
 import VO.PlexVO;
 import VO.ReservationVO;
 
@@ -239,7 +238,7 @@ public class PlexDAO {
 		try {
 			conn = DBConnection.getConnection();
 			//stmt = conn.createStatement();
-			String sql = "select * from member " + "where plexNo = ? and ReserveDay = ? and reserveTime = ?";
+			String sql = "select * from Reservation " + "where plexNo = ? and ReserveDay = ? and reserveTime = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setLong(1, plexNo);
 			Date ReserveDate = Date.valueOf(ReserveDay);

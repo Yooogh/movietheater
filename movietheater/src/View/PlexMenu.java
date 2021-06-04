@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import VO.MemberVO;
 import VO.PlexVO;
 import VO.ReservationVO;
-import dao.MemberDAO;
 import dao.PlexDAO;
 import dao.ReservationDAO;
 
