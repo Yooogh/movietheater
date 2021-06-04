@@ -1,6 +1,7 @@
 package Model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MyPageDAOImpl implements MyPageDAO{
@@ -134,6 +135,37 @@ public class MyPageDAOImpl implements MyPageDAO{
 		}
 	}
 
+
+	//전체 회원 조회
+	public ArrayList<MyPageVO> viewMemberList() {
+		ArrayList<MyPageVO> list = new ArrayList<MyPageVO>();
+
+		connDB();
+		ResultSet rs = null;
+		String query = "SELECT ID, NAME, BIRTH FROM MYPAGE";
+
+		try {
+			PreparedStatement pstmt = con.prepareStatement(query);
+			rs = pstmt.executeQuery();
+
+			while(rs.next()) {
+				MyPageVO mp = new MyPageVO();
+				mp.setId(rs.getString("ID"));
+				mp.setName(rs.getString("NAME"));
+				mp.setBirth(rs.getString("BIRTH"));
+				list.add(mp);
+			}
+
+			rs.close();
+			state.close();
+			con.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 
 	@Override
 	public void deleteMember(MyPageVO mp) {

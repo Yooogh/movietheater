@@ -34,8 +34,8 @@ public class SalesInquiry {
                 case "2":
                     System.out.println("==========일별 매출==========");
                     System.out.print("조회를 원하는 일: ");
-                    //i = sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
                     String salesDay = sc.nextLine();
+                    // sc.nextLine();//sc를 이용하여 조회를 원하는 날짜를 입력후
                     int daysTotal = reservationController.getSalesByDay(salesDay);
                     System.out.println(salesDay + "일의 매출은 : " + daysTotal);
                     System.out.print("처음으로 돌아가려면 0을 입력: ");
@@ -45,9 +45,9 @@ public class SalesInquiry {
 
                 case "3":
                     System.out.println("=========영화별 매출=========");
-                    System.out.print("조회를 원하는 영화:");
-                    //i = sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
+                    System.out.print("조회를 원하는 영화: ");
                     String salesMovie = sc.nextLine();
+                    //sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
                     int moviesTotal = reservationController.getSalesByMovie(salesMovie);
                     System.out.println((salesMovie + "의 매출은 : " + moviesTotal));
                     System.out.print("처음으로 돌아가려면 0을 입력: ");
