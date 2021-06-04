@@ -247,13 +247,13 @@ public class PlexMenu {
 		vo.setName(name);
 		System.out.println("좌석 열의 개수: ");
 		column = scan.nextInt();
-		if(name.length() > 20) {
+		if(column > 20) {
 			Exception e = new Exception();
 			throw e;
 		}
 		System.out.println("좌석 행의 개수: ");
 		rows = scan.nextInt();
-		if(name.length() > 20) {
+		if(rows > 20) {
 			Exception e = new Exception();
 			throw e;
 		}
