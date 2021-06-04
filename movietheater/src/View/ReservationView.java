@@ -16,14 +16,12 @@ public class ReservationView{
 
     private ReservationController reservationController = new ReservationController();
 
-    public void setMovie(){
-        String []movie = {};
-    }
-
+    Scanner scanner = new Scanner(System.in);
 
     public void mainMenu(MyPageVO myPageVO) {
+
         MyPageUI myPageUI = new MyPageUI();
-        Scanner scanner = new Scanner(System.in);
+
         int select = 0;
         System.out.println("예약시스템을 시작합니다.");
         System.out.println("=========== 메뉴 선택 ===========");
@@ -40,17 +38,16 @@ public class ReservationView{
                 ReservationCMD(myPageVO);
                 break;
             case 2:
-                ReservationCheck();
+                ReservationCheck(myPageVO);
                 break;
             case 3:
-                ReservationCancel();
+                ReservationCancel(myPageVO);
                 break;
             case 4:
                 myPageUI.userMain(myPageVO);
+                scanner.close();
                 break;
         }
-
-        scanner.close();
 
     }
 
@@ -60,7 +57,6 @@ public class ReservationView{
 
         plexList = reservationController.loadTheaterString();
 
-        Scanner scanner = new Scanner(System.in);
         String[] movie = tempMovie();
         String[] seat = tempSeat();
 
@@ -107,23 +103,19 @@ public class ReservationView{
         reserve.setUserId(userId);
 
         reservationController.save(reserve);
-        scanner.close();
         System.out.println("예약이 완료 되었습니다.");
 
         mainMenu(myPageVO);
 
     }
 
-    public void ReservationCheck() {
-        Scanner scanner = new Scanner(System.in);
+    public void ReservationCheck(MyPageVO myPageVO) {
         System.out.printf("현재 예매현황을 확인");
         System.out.println("1을 누르면 돌아갑니다.");
         System.out.println("=========================================");
         int select = 0;
-        List<ReservationVO> test = reservationController.findAll("test2");
 
-        if(test.isEmpty())
-            return;
+        List<ReservationVO> test = reservationController.findAll(myPageVO.getId());
 
         for(int i = 0; i<test.size(); i++){
             System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
@@ -134,18 +126,15 @@ public class ReservationView{
             System.out.println("좌석 : " + test.get(i).getSeat());
         }
         select = scanner.nextInt();
+
         if(select == 1)
-            return;
+            mainMenu(myPageVO);
     }
 
-    public void ReservationCancel(){
-        Scanner scanner = new Scanner(System.in);
+    public void ReservationCancel(MyPageVO myPageVO){
         System.out.println("예약을 취소합니다.");
         Long select = 0L;
-        List<ReservationVO> test = reservationController.findAll("test2");
-
-        if(test.isEmpty())
-            return;
+        List<ReservationVO> test = reservationController.findAll(myPageVO.getId());
 
         for(int i = 0; i<test.size(); i++){
             System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
@@ -155,15 +144,18 @@ public class ReservationView{
             System.out.print("예매 인원 : " + test.get(i).getPeople()+ "\t");
             System.out.println("좌석 : " + test.get(i).getSeat());
         }
+
         System.out.print("예약번호를 입력하세요 : ");
         select = scanner.nextLong();
 
         reservationController.remove(select);
+        System.out.println(select + "번의 예약이 취소되었습니다.");
+
+        mainMenu(myPageVO);
 
     }
 
     public void ReservationDelete(){
-        Scanner scanner = new Scanner(System.in);
         System.out.println("전체 예약을 취소합니다.");
         reservationController.deleteAll();
 

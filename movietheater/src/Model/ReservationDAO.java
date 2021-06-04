@@ -132,7 +132,23 @@ public class ReservationDAO {
         total = rs.getInt(1);
 
         return total;
-        }
+    }
+
+    public int getSalesByMovie(String movieName) throws Exception{
+        int total = 0;
+        connDB();
+        PreparedStatement pst = con.prepareStatement("select sum(totalPrice) from Reservation_Test where movieName like ? ");
+        pst.setString(1,movieName);
+
+        ResultSet rs = null;
+        rs = pst.executeQuery();
+        rs.next();
+
+        total = rs.getInt(1);
+
+        return total;
+
+    }
 
 
     public void connDB(){
