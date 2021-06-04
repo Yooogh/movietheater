@@ -105,11 +105,6 @@ public class PlexDAO {
 		} finally {
 			close(stmt, rs, conn);
 		}
-		//if(vo != null){
-		//	System.out.println("Null이 아님");
-		//}else
-		//	System.out.println("Null임");
-
 		return vo;
 	}
 
@@ -255,14 +250,12 @@ public class PlexDAO {
 
 		try {
 			conn = this.getConnection();
-			//stmt = conn.createStatement();
 			String sql = "select * from Reservation " + "where plexNo = ? and ReserveDay = ? and reserveTime = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setLong(1, plexNo);
 			Date ReserveDate = Date.valueOf(ReserveDay);
 			ps.setDate(2, ReserveDate);
 			ps.setString(3, reserveTime);
-			//rs = stmt.executeQuery(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
 				ReservationVO vo = new ReservationVO();
@@ -280,7 +273,6 @@ public class PlexDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			//close(stmt, rs, null);
 			close(ps, rs, conn);
 		}
 		return list;
