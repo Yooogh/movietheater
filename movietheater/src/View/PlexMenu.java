@@ -13,7 +13,7 @@ import Model.ReservationDAO;
 public class PlexMenu {
 	ArrayList<PlexVO> plist = new ArrayList< PlexVO >();
 
-	public PlexMenu() {
+	public void PlexManager() {
 		//TODO
 		//상영관 수정(이름변경 제외)과 삭제시 상영관에서 상영중인 영화의 티켓들을 취소해야 됨
 		//상영관의 시청여부는 티켓과 현재시간을 비교하여 판단
@@ -28,24 +28,24 @@ public class PlexMenu {
 
 			} else if (menu.equals("1")) {
 				// 상영관 관리
-				System.out.println("1.상영관 관리 \na:등록, b:수정, c:삭제, d: 상영관 좌석 출력");
+				System.out.println("1.상영관 관리 \n1:등록 \n2:수정 \n3:삭제 \n4: 상영관 좌석 출력");
 				String submenu = scan.next();
 
-				if (submenu.equals("a")) {
+				if (submenu.equals("1")) {
 					//PlexList();
 					if(PlexRegister() == 1) {
 					System.out.println("새로운 상영관이 등록되었습니다.");
 					PlexList();
 					}
-				} else if (submenu.equals("b")) {
+				} else if (submenu.equals("2")) {
 					PlexList();
 					PlexEdit();
 					PlexList();
-				} else if (submenu.equals("c")) {
+				} else if (submenu.equals("3")) {
 					PlexRemove();
 					System.out.println("정상적으로 삭제되었습니다.");
 					PlexList();
-				} else if (submenu.equals("d")) {
+				} else if (submenu.equals("4")) {
 					PlexList();
 					PlexPrintMenu();
 					System.out.println("좌석을 출력했습니다.");

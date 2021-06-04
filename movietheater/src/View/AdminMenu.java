@@ -13,6 +13,7 @@ public class AdminMenu {
         AdminVO avo = new AdminVO();
         AdminDAO adao = new AdminDAO();
         MovieExe ME = new MovieExe();
+        PlexMenu PM = new PlexMenu();
 
         while (true) {
             System.out.println("==========관리 항목==========");
@@ -29,6 +30,7 @@ public class AdminMenu {
             switch(i){      //  실행을 원하는 번호 입력시 해당 항목 호출하여 실행
 
                 case "1":
+                    PM.PlexManager();   //  PlexManager 메소드 호출 실행
                     continue;
 
                 case "2":

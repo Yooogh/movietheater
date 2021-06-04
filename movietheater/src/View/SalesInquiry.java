@@ -26,6 +26,8 @@ public class SalesInquiry {
                     String salesMonth = sc.nextLine();//조회를 원하는 달을 입력
                     int monthTotal = reservationController.getSalesByMonth(salesMonth);
                     System.out.println(salesMonth + "월의 매출은 : " + monthTotal);
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
+                    i = sc.nextLine();
                     //DB에 저장된 매출 출력
                     continue;
 
@@ -36,6 +38,8 @@ public class SalesInquiry {
                     String salesDay = sc.nextLine();
                     int daysTotal = reservationController.getSalesByDay(salesDay);
                     System.out.println(salesDay + "일의 매출은 : " + daysTotal);
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
+                    i = sc.nextLine();
                     //해당 날짜의 매출 출력
                     continue;
 
@@ -43,6 +47,11 @@ public class SalesInquiry {
                     System.out.println("=========영화별 매출=========");
                     System.out.print("조회를 원하는 영화:");
                     //i = sc.nextLine();//sc를 이용하여 조회를 원하는 영화 이름 입력
+                    String salesMovie = sc.nextLine();
+                    int moviesTotal = reservationController.getSalesByMovie(salesMovie);
+                    System.out.println((salesMovie + "의 매출은 : " + moviesTotal));
+                    System.out.print("처음으로 돌아가려면 0을 입력: ");
+                    i = sc.nextLine();
                     //해당 영화의 매출 출력
                     continue;
 

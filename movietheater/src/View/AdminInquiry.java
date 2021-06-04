@@ -64,6 +64,7 @@ public class AdminInquiry {
                 case "5":
                     System.out.println("=======얘매 내역 조회=======");
                     System.out.println("조회 하고자 하는 회원 ID: ");
+                    String uid = sc.nextLine();
                     //sc를 이용해서 ID를 입력
                     System.out.println("영화 이름: ");
                     System.out.println("상영관: ");
