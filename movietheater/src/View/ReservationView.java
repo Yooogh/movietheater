@@ -7,6 +7,7 @@ import Model.ReservationVO;
 import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -55,9 +56,11 @@ public class ReservationView{
 
     public void ReservationCMD(MyPageVO myPageVO){
         ReservationVO reserve = new ReservationVO();
+        List<String> plexList = new ArrayList<>();
+
+        plexList = reservationController.loadTheaterString();
 
         Scanner scanner = new Scanner(System.in);
-        String[] theater = tempTheater();
         String[] movie = tempMovie();
         String[] seat = tempSeat();
 
@@ -72,20 +75,20 @@ public class ReservationView{
         for(int i = 0 ; i<movie.length; i++){
             System.out.print(movie[i] + "\t");
         }
+
         System.out.println();
         System.out.print("예약 할 영화를 고르세요 : ");
         selectMovie = scanner.nextInt();
 
-        for(int i = 0 ; i<theater.length; i++){
-            System.out.print(theater[i] + "\t");
-        }
+        for(int i =0; i<plexList.size(); i++)
+            System.out.print(plexList.get(i) + "\t");
+
         System.out.println();
         System.out.print("상영관을 고르세요 : ");
         selectTheater = scanner.nextInt();
 
-        for(int i = 0 ; i<seat.length; i++){
-            System.out.print(seat[i] + "\t");
-        }
+        //좌석코드
+
         System.out.println();
         System.out.print("좌석을 고르세요 : ");
         selectSeat = scanner.nextInt();
@@ -95,7 +98,7 @@ public class ReservationView{
 
         LocalDate reserveNow = LocalDate.now();
 
-        reserve.setTheaterName(theater[selectTheater-1]);
+        reserve.setTheaterName(plexList.get(selectTheater-1));
         reserve.setMovieName(movie[selectMovie-1]);
         reserve.setSeat(seat[selectSeat-1]);
         reserve.setReserveDay(reserveNow);

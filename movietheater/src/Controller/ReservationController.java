@@ -1,14 +1,17 @@
 package Controller;
 
-import Model.ReservationDAO;
-import Model.ReservationVO;
+import Model.*;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationController {
 
     private ReservationDAO reserveDAO = new ReservationDAO();
+    private MovieDAOIplm movieDAOIplm = new MovieDAOIplm();
+    private PlexDAO plexDAO = new PlexDAO();
 
     public Long save(ReservationVO reserve){
         reserveDAO.save(reserve);
@@ -70,11 +73,23 @@ public class ReservationController {
         return total;
     }
 
-    public void loadTheater(){
-        //Theater 가져오는 메소드
+    public List<PlexVO> loadTheater(){
+        return plexDAO.selectAll();
+    }
+
+    public List<String> loadTheaterString(){
+        List<String> plexList = new ArrayList<>();
+        List<PlexVO> plexVos = plexDAO.selectAll();
+
+        for(int i = 0; i <plexVos.size(); i++){
+            plexList.add(plexVos.get(i).getName());
+        }
+
+        return plexList;
     }
 
     public void loadMovie(){
+
         //영화목록 가져오는 메소드
     }
 
