@@ -11,14 +11,7 @@ import Model.PlexDAO;
 import Model.ReservationDAO;
 
 public class PlexMenu {
-	//ArrayList<MemberVO> mlist = new ArrayList< MemberVO >();
 	ArrayList<PlexVO> plist = new ArrayList< PlexVO >();
-	//ArrayList<ReservationVO> rlist = new ArrayList< ReservationVO >();
-
-	public static void main(String[] args) {
-		new PlexMenu();
-	}
-
 
 	public PlexMenu() {
 		//TODO
@@ -47,7 +40,6 @@ public class PlexMenu {
 				} else if (submenu.equals("b")) {
 					PlexList();
 					PlexEdit();
-					//System.out.println("정상적으로 수정되었습니다.");
 					PlexList();
 				} else if (submenu.equals("c")) {
 					PlexRemove();
@@ -93,10 +85,7 @@ public class PlexMenu {
 		int c = pvo.getColumn();
 		int total = r*c;
 		int reserved;
-		//ReservationDAO rdao = new ReservationDAO();
-		//ReservationVO rvo = new ReservationVO();
 		reserved = pdao.getReservedSeat(plexNO, ReserveDay, reserveTime).size();
-		//int reserved = rvo.getALL.size();
 		System.out.print("(전체좌석: " + total+" / 예약가능 좌석: "+ (total-reserved) +")\n" );
 		
 	}
@@ -106,8 +95,6 @@ public class PlexMenu {
 		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
-		//PlexVO vo = pdao.selectByNo(plexNo);
-		//if(vo != null) {
 		if(pdao.IsExist(plexNo)){
 			PlexPrint(plexNo);
 			//printLeft 테스트용
@@ -209,20 +196,16 @@ public class PlexMenu {
 			String seat = "" + cchar + (i+1);
 			System.out.print(" ");
 			String a = new String();
-			//if(takednSeat.contains(seat)) {
 			if(containsCaseInsensitive(seat,takednSeat)) {
 				System.out.print("X");
 			}else 
 				System.out.print("O");
 			}
 			System.out.println();
-			//System.out.println(seat);
-		//}
 		}
 	}
 	
 	public int PlexRegister() {
-		//들어올 수 있는 값인지 확인해줘야 함
 		PlexVO vo = new PlexVO();
 		String name;
 		int rows;
@@ -259,7 +242,6 @@ public class PlexMenu {
 		}
 		vo.setColumn(column);
 		vo.setRow(rows);
-		//PlexDAO pdao = new PlexDAO();
 		pdao.regPlex(vo);
 		System.out.println();
 		return 1;
@@ -277,8 +259,6 @@ public class PlexMenu {
 		PlexDAO pdao = new PlexDAO();
 		PlexVO vo = pdao.selectByNo(plexNo);
 		if(vo != null) {
-		//if(pdao.IsExist(plexNo)){
-			//PlexVO vo = pdao.selectByNo(plexNo);
 			System.out.println("수정 항목 선택 [1:상영관 이름 2:열의 개수 3.행의 개수]");
 			String part = scan.next();
 			if(part.contentEquals("1")) {  //상영관 이름 수정
