@@ -6,7 +6,7 @@ import Model.MyPageDAOImpl;
 import Model.MyPageVO;
 
 
-public class MyPageUI {
+public class MyPageView {
 	private Scanner sc = new Scanner(System.in);
 	private MyPageDAOImpl dao = new MyPageDAOImpl();
 	ReservationView rv = new ReservationView();

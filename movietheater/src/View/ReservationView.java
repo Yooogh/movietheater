@@ -5,13 +5,9 @@ import Controller.ReservationController;
 import Controller.SeatController;
 import Model.MyPageVO;
 import Model.PlexDAO;
-import Model.PlexVO;
 import Model.ReservationVO;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -23,7 +19,7 @@ public class ReservationView{
 
     public void mainMenu(MyPageVO myPageVO) {
 
-        MyPageUI myPageUI = new MyPageUI();
+        MyPageView myPageView = new MyPageView();
 
         int select = 0;
         System.out.println("예약시스템을 시작합니다.");
@@ -47,7 +43,7 @@ public class ReservationView{
                 ReservationCancel(myPageVO);
                 break;
             case 4:
-                myPageUI.userMain(myPageVO);
+                myPageView.userMain(myPageVO);
                 scanner.close();
                 break;
         }

@@ -7,7 +7,7 @@ public class SelectScreen {
         AdminMenu AM = new AdminMenu();
         Scanner sc = new Scanner(System.in);
         AdminLogin AL = new AdminLogin();
-        MyPageUI myPageUI = new MyPageUI();
+        MyPageView myPageView = new MyPageView();
 
         while(true){
                 System.out.println("==========접근 선택==========");
@@ -21,11 +21,11 @@ public class SelectScreen {
 
             switch(i){
                 case "1":
-                    myPageUI.loginMember();
+                    myPageView.loginMember();
                     continue;
 
                 case "2":
-                    myPageUI.signUpMember();
+                    myPageView.signUpMember();
                     continue;
 
                 case "3":
