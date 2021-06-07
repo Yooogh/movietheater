@@ -1,8 +1,7 @@
 package Model;
 
-import Model.AdminVO;
-
 import java.sql.*;
+import java.util.ArrayList;
 
 public class AdminDAO {
     private static final String driver = "oracle.jdbc.driver.OracleDriver";
@@ -15,7 +14,7 @@ public class AdminDAO {
     public void saveID(AdminVO AVO){
         connDB();   //DB에 연결
         String query = "INSERT INTO AdminAccount(adminID, adminPW, adminNAME)"
-                        + "values('"+AVO.getAdminID() +"', '"+ AVO.getAdminPW()+"', '" + AVO.getAdminNAME() +"')";
+                        + "values('"+AVO.getAdminID() +"', '"+ AVO.getAdminPW()+"', '" + AVO.getAdminNAME()+"')";
         //AdminVO의 adminID와 adminPW를 가져와 AdminAccount의 ID와 PW칸에 추가
 
         try {
@@ -58,6 +57,36 @@ public class AdminDAO {
         }
         return false;
     }
+
+    public ArrayList<AdminVO> viewAdminAccountList() {    //전체 관리자 조회
+        ArrayList<AdminVO> ADMlist = new ArrayList<AdminVO>();
+
+        connDB();
+        ResultSet rs = null;
+        String query = "SELECT adminID, adminNAME FROM adminaccount";
+
+        try {
+            PreparedStatement ps = con.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while(rs.next()) {
+                AdminVO avo = new AdminVO();
+                avo.setAdminID(rs.getString("adminID"));
+                avo.setAdminNAME(rs.getString("adminNAME"));
+                ADMlist.add(avo);
+            }
+
+            rs.close();
+            state.close();
+            con.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return ADMlist;
+    }
+
 
     public void connDB(){
         try {
