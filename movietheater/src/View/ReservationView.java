@@ -1,6 +1,5 @@
 package View;
 
-
 import Controller.ReservationController;
 import Model.MyPageVO;
 import Model.ReservationVO;
@@ -64,7 +63,6 @@ public class ReservationView{
         int selectMovie = 0;
         int selectSeat = 0;
         int selectPeople = 0;
-
 
         String userId = myPageVO.getId();
 
