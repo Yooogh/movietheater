@@ -14,9 +14,8 @@ public class AdminDAO {
 
     public void saveID(AdminVO AVO){
         connDB();   //DB에 연결
-        String query = "INSERT INTO AdminAccount(adminID, adminPW)"
-                        + "values('"+AVO.getAdminID()
-                        +"', '"+ AVO.getAdminPW()+"')";
+        String query = "INSERT INTO AdminAccount(adminID, adminPW, adminNAME)"
+                        + "values('"+AVO.getAdminID() +"', '"+ AVO.getAdminPW()+"', '" + AVO.getAdminNAME() +"')";
         //AdminVO의 adminID와 adminPW를 가져와 AdminAccount의 ID와 PW칸에 추가
 
         try {

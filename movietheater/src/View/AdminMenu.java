@@ -53,20 +53,40 @@ public class AdminMenu {
                     System.out.print("사용할 PW: " );
                     String PW = sc.nextLine();
                     avo.setAdminPW(PW);// AdminVO의 adminPW로 세팅
+                    System.out.print("관리자 이름: ");
+                    avo.getAdminNAME();// AdminVO의 adminNAME으로 세팅
                     adao.saveID(avo);
-                    System.out.print("처음으로 돌아가려면 아무키 입력: ");
-                    i = sc.nextLine();
+                    System.out.println("계속해서 등록하시겠습니까?");
+                    System.out.print("[그만:0 계속:1]: ");
+
+                    if (sc.nextInt()==0) {
+                        break;
+                    }else if(sc.nextInt()==1) {
+                        continue;
+                    }else {
+                        System.out.println("다시 입력하세요.");
+                    }
                     System.out.println("===관리 항목으로 돌아갑니다====");
                     continue;
 
                 case "6":
                     System.out.println("=========관리자 삭제=========");
+
                     System.out.print("삭제할 ID: ");
                     String id = sc.next();
                     adao.deleteID(id);//String형식의 id를 입력받아 DB의 Adminaccount의 ID형식일 경우 삭제
                     System.out.println("==관리자 ID가 삭제 되었습니다==");
-                    System.out.println("===관리 항목으로 돌아갑니다====");
-                    i = sc.nextLine();
+                    System.out.println("계속해서 삭제하시겠습니까?");
+                    System.out.print("[그만:0 계속:1]: ");
+
+                    if (sc.nextInt()==0) {
+                        System.out.println("===관리 항목으로 돌아갑니다====");
+                        break;
+                    }else if(sc.nextInt()==1) {
+                        continue;
+                    }else {
+                        System.out.println("다시 입력하세요.");
+                    }
                     continue;
 
                 case "7":

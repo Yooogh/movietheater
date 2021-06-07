@@ -39,9 +39,16 @@ public class AdminInquiry {
                         System.out.print(memberList.get(j).getName()+"|");
                         System.out.println(memberList.get(j).getBirth()+"|");
                     }
-                    System.out.print("처음으로 돌아가려면 아무키 입력: ");
-                    i = sc.nextLine();
-                    continue;
+                    System.out.println("계속해서 조회하시겠습니까?");
+                    System.out.print("[그만:0 계속:1]: ");
+
+                    if (sc.nextInt()==0) {
+                        break;
+                    }else if(sc.nextInt()==1) {
+                        continue;
+                    }else {
+                        System.out.println("다시 입력하세요.");
+                    }
 
                 case "2":
                     System.out.println("=========회원ID 조회=========");
@@ -58,9 +65,16 @@ public class AdminInquiry {
                     System.out.println("회원 ID: " + MVO.getId());
                     System.out.println("회원 이름: " + MVO.getName());
                     System.out.println("회원 생년월일: " + MVO.getBirth());
-                    System.out.print("처음으로 돌아가려면 아무키 입력: ");
-                    i = sc.nextLine();
-                    continue;
+                    System.out.println("계속해서 조회하시겠습니까?");
+                    System.out.print("[그만:0 계속:1]: ");
+
+                    if (sc.nextInt()==0) {
+                        break;
+                    }else if(sc.nextInt()==1) {
+                        continue;
+                    }else {
+                        System.out.println("다시 입력하세요.");
+                    }
 
                 case "3":
                     System.out.println("=========얘매내역 조회=========");
@@ -74,9 +88,16 @@ public class AdminInquiry {
                         System.out.println("상영회차: " + reservationVOList.get(k).getReserveTime());
                     }
 
-                    System.out.print("처음으로 돌아가려면 아무키 입력: ");
-                    i = sc.nextLine();
-                    continue;
+                    System.out.println("계속해서 조회하시겠습니까?");
+                    System.out.print("[그만:0 계속:1]: ");
+
+                    if (sc.nextInt()==0) {
+                        break;
+                    }else if(sc.nextInt()==1) {
+                        continue;
+                    }else {
+                        System.out.println("다시 입력하세요.");
+                    }
 
                 case "4":
                     System.out.println("관리항목 선택으로 돌아갑니다.");
