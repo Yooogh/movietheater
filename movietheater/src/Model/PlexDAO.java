@@ -108,6 +108,32 @@ public class PlexDAO {
 		return vo;
 	}
 
+	public PlexVO selectByName(String name) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		PlexVO vo = null;
+
+		try {
+			conn = this.getConnection();
+			stmt = conn.createStatement();
+			String sql = "select * from Plex where name = '" + name + "'";
+			rs = stmt.executeQuery(sql);
+			if (rs.next()) {
+				vo = new PlexVO();
+				vo.setPlexNo(rs.getInt("PlexNo"));
+				vo.setName(rs.getString("name"));
+				vo.setRow(rs.getInt("R"));
+				vo.setColumn(rs.getInt("C"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt, rs, conn);
+		}
+		return vo;
+	}
+
 	public boolean IsExist(int plexNo) {
 		Connection conn = null;
 		Statement stmt = null;

@@ -88,12 +88,18 @@ public class ReservationView{
         selectTheater = scanner.nextInt();
 
         //좌석 뷰코드
-        int plexNo = plexDAO.selectByNo(selectTheater).getPlexNo();
-        seatController.seatsStatus(plexNo, reserveNow, null);
+        //int plexNo = plexDAO.selectByNo(selectTheater).getPlexNo();
+        PlexDAO pdao = new PlexDAO();
+        if(plexList.size() < selectTheater) {
+             System.out.println("잘못된 상영관입니다.");
+             return;
+        }
+        String name = plexList.get(selectTheater - 1);
+        seatController.SeatLeftPrint(name, reserveNow);
 
-        System.out.println();
         System.out.print("좌석을 고르세요 : ");
         selectSeat = scanner.next();
+
 
 //        System.out.print("예약할 인원을 선택하세요 : ");
 //        selectPeople = scanner.nextInt();

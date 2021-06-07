@@ -54,6 +54,36 @@ public class SeatDAO {
 		}
 	}
 
+	public ArrayList<SeatVO> getReservedSeat(String plexName, LocalDate ReserveDay) {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<SeatVO> list = new ArrayList<SeatVO>();
+
+		try {
+			conn = this.getConnection();
+			String sql = "select * from Reservation_Test " + "where TheaterName = ? and ReserveDay = TO_DATE(?,'YYYYMMDD')";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, plexName);
+			String ReserveDate = ReserveDay.format(DateTimeFormatter.ofPattern("YYYYMMdd"));
+			ps.setString(2, ReserveDate);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				SeatVO vo = new SeatVO();
+				vo.setReserve_id(rs.getLong("reserve_id"));
+				vo.setSeat(rs.getString("seat"));
+				vo.setReserveDay(rs.getDate("reserveDay").toLocalDate());
+				vo.setReserveTime(rs.getString("reserveTime"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(ps, rs, conn);
+		}
+		return list;
+	}
+
 	public ArrayList<SeatVO> getReservedSeat(String plexName, LocalDate ReserveDay, String reserveTime) {
 		Connection conn = null;
 		PreparedStatement ps = null;
