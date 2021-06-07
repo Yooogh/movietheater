@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import Controller.SeatController;
 import Model.PlexVO;
 import Model.ReservationVO;
+import Model.SeatDAO;
 import Model.PlexDAO;
 import Model.ReservationDAO;
 
@@ -32,7 +34,6 @@ public class PlexMenu {
 				String submenu = scan.next();
 
 				if (submenu.equals("1")) {
-					//PlexList();
 					if(PlexRegister() == 1) {
 					System.out.println("새로운 상영관이 등록되었습니다.");
 					PlexList();
@@ -77,131 +78,17 @@ public class PlexMenu {
 			System.out.println();
 		}
 	}
-	
-	private void seatsStatus(int plexNO, LocalDate ReserveDay, String reserveTime) {
-		PlexDAO pdao = new PlexDAO();
-		PlexVO pvo = pdao.selectByNo(plexNO);
-		int r = pvo.getRow();
-		int c = pvo.getColumn();
-		int total = r*c;
-		int reserved;
-		reserved = pdao.getReservedSeat(plexNO, ReserveDay, reserveTime).size();
-		System.out.print("(전체좌석: " + total+" / 예약가능 좌석: "+ (total-reserved) +")\n" );
-		
-	}
 
 	public void PlexPrintMenu(){
 		System.out.println("상영관 번호를 입력해주세요:");
 		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
+		SeatController Stc = new SeatController();
 		if(pdao.IsExist(plexNo)){
-			PlexPrint(plexNo);
-			//printLeft 테스트용
-			/*
-			ArrayList <String> takednSeat = new ArrayList<String>();
-			takednSeat.add("a1");
-			takednSeat.add("b1");
-			takednSeat.add("c2");
-			takednSeat.add("d4");
-			printLeft(plexNo,takednSeat);
-			*/
+			Stc.PlexPrint(plexNo);
 		}else {
 			System.out.println("상영관 번호를 잘못 입력하였습니다. 다시 입력하세요.");
-		}
-	}
-	
-	public void PlexPrint(int plexNO) {
-		System.out.println("좌석 배치 출력");
-		PlexDAO pdao = new PlexDAO();
-		PlexVO pvo = pdao.selectByNo(plexNO);
-		int r = pvo.getRow();
-		int c = pvo.getColumn();
-		for (int i = 0; i < c; i++) {
-			char k = (char)('a'+i);
-			System.out.print(" ");
-			System.out.print(k);
-		}
-		System.out.println();
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-				if(j == 0) {
-					System.out.print(i+1);
-				}
-				System.out.print(" ");
-				System.out.print("O");
-			}
-			System.out.println();
-		}
-	}
-	
-
-/*	
-	public void PlexPrint2(int plexNO, LocalDate ReserveDay, String reserveTime) {
-		System.out.println("좌석 배치 출력");
-		PlexDAO pdao = new PlexDAO();
-		PlexVO pvo = pdao.selectByNo(plexNO);
-		int r = pvo.getRow();
-		int c = pvo.getColumn();
-		ReservationDAO rdao = new ReservationDAO();
-		ArrayList<ReservationVO> rlist = new ArrayList< ReservationVO >();
-		rlist = pdao.getReservedSeat(plexNO, ReserveDay, reserveTime);
-		ArrayList <String> takednSeat = new ArrayList<String>();
-		//ArrayList<ReservationVO> rlist = new ArrayList< ReservationVO >();
-		for(ReservationVO vo: rlist) {
-			takednSeat.add(vo.getSeat());
-		}
-		for (int i = 0; i < c; i++) {
-			char k = (char)('a'+i);
-			System.out.print(" ");
-			System.out.print(k);
-		}
-		System.out.println();
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-			if(j == 0) {
-				System.out.print(i+1);
-			}
-			char cchar = (char)('a'+j);
-			String seat = "" + cchar + (i+1);
-			System.out.print(" ");
-			if(takednSeat.contains(seat)) {
-				System.out.print("X");
-			}else 
-				System.out.print("O");
-			}
-			
-		}
-	}
-*/	
-	public void printLeft(int plexNO, ArrayList <String> takednSeat) {
-		System.out.println("좌석 배치 출력");
-		PlexDAO pdao = new PlexDAO();
-		PlexVO pvo = pdao.selectByNo(plexNO);
-		int r = pvo.getRow();
-		int c = pvo.getColumn();
-		ReservationDAO rdao = new ReservationDAO();
-		for (int i = 0; i < c; i++) {
-			char k = (char)('a'+i);
-			System.out.print(" ");
-			System.out.print(k);
-		}
-		System.out.println();
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-			if(j == 0) {
-				System.out.print(i+1);
-			}
-			char cchar = (char)('a'+j);
-			String seat = "" + cchar + (i+1);
-			System.out.print(" ");
-			String a = new String();
-			if(containsCaseInsensitive(seat,takednSeat)) {
-				System.out.print("X");
-			}else 
-				System.out.print("O");
-			}
-			System.out.println();
 		}
 	}
 	
