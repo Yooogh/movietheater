@@ -16,6 +16,9 @@ public class AdminInquiry {
     Scanner sc = new Scanner(System.in);
     MyPageDAOImpl MPDI = new MyPageDAOImpl();
     ReservationController RC = new ReservationController();
+    int q = 1;
+    int r = 1;
+    int u = 1;
 
         while (true) {
             System.out.println("=========회원정보 관리=========");
@@ -26,9 +29,6 @@ public class AdminInquiry {
             System.out.println("5. 프로그램 종료");
             System.out.println("조회 항목 선택: ");
             String i = sc.next();   //  조회를 원하는 항목 번호 입력
-            int q = 1;
-            int r = 1;
-            int u = 1;
 
             switch(i) {     //  조회를 원하는 번호를 입력시 해당 항목 출력
 
