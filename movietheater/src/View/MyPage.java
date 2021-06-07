@@ -1,4 +1,7 @@
-package Model;
+package View;
+
+import Model.MyPageDAOImpl;
+import Model.MyPageVO;
 
 import java.util.Scanner;
 
