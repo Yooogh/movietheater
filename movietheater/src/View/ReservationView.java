@@ -147,9 +147,9 @@ public class ReservationView{
         List<ReservationVO> test = reservationController.findAll(myPageVO.getId());
 
         for(int i = 0; i<test.size(); i++){
-            System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
+            System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "  |  ");
             System.out.print("상영관 : " + test.get(i).getTheaterName() + "\t");
-            System.out.print("영화 : " + test.get(i).getMovieName()+ "\t");
+            System.out.print("영화 : " + test.get(i).getMovieName()+ "\t" + "\t");
             System.out.print("예약일 : " + test.get(i).getReserveDay()+ "\t");
             System.out.print("예매 인원 : " + test.get(i).getPeople()+ "\t");
             System.out.println("좌석 : " + test.get(i).getSeat());
