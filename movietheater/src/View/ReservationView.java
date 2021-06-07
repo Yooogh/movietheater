@@ -2,7 +2,10 @@ package View;
 
 
 import Controller.ReservationController;
+import Controller.SeatController;
 import Model.MyPageVO;
+import Model.PlexDAO;
+import Model.PlexVO;
 import Model.ReservationVO;
 import lombok.RequiredArgsConstructor;
 
@@ -53,18 +56,19 @@ public class ReservationView{
 
     public void ReservationCMD(MyPageVO myPageVO){
         ReservationVO reserve = new ReservationVO();
-        List<String> plexList = new ArrayList<>();
-
-        plexList = reservationController.loadTheaterString();
+        List<String> plexList = reservationController.loadTheaterString();
+        SeatController seatController = new SeatController();
+        PlexDAO plexDAO = new PlexDAO();
 
         String[] movie = tempMovie();
         String[] seat = tempSeat();
 
         int selectTheater = 0;
         int selectMovie = 0;
-        int selectSeat = 0;
+        String selectSeat;
         int selectPeople = 0;
 
+        LocalDate reserveNow = LocalDate.now();
 
         String userId = myPageVO.getId();
 
@@ -83,22 +87,22 @@ public class ReservationView{
         System.out.print("상영관을 고르세요 : ");
         selectTheater = scanner.nextInt();
 
-        //좌석코드
+        //좌석 뷰코드
+        int plexNo = plexDAO.selectByNo(selectTheater).getPlexNo();
+        seatController.seatsStatus(plexNo, reserveNow, null);
 
         System.out.println();
         System.out.print("좌석을 고르세요 : ");
-        selectSeat = scanner.nextInt();
+        selectSeat = scanner.next();
 
-        System.out.print("예약할 인원을 선택하세요 : ");
-        selectPeople = scanner.nextInt();
-
-        LocalDate reserveNow = LocalDate.now();
-
+//        System.out.print("예약할 인원을 선택하세요 : ");
+//        selectPeople = scanner.nextInt();
+//
         reserve.setTheaterName(plexList.get(selectTheater-1));
         reserve.setMovieName(movie[selectMovie-1]);
-        reserve.setSeat(seat[selectSeat-1]);
+        reserve.setSeat(selectSeat);
         reserve.setReserveDay(reserveNow);
-        reserve.setPeople(selectPeople);
+        reserve.setPeople(1);
         reserve.setTotalPrice(selectPeople * 10000);
         reserve.setUserId(userId);
 

@@ -100,6 +100,7 @@ public class ReservationController {
         return plexList;
     }
 
+
     public void loadMovie(){
 
         //영화목록 가져오는 메소드
