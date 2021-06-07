@@ -17,11 +17,6 @@ public class MovieMgrIplm implements MovieMgr {
 	}
 
 	@Override
-	public void listMovie(MovieVO movievo) {
-		
-	}
-
-	@Override
 	public void delMovie(MovieVO movievo) {
 		
 	}

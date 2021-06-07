@@ -102,12 +102,23 @@ public class ReservationController {
 
 
    public List<MovieVO> loadMovie() {
-        return movieDAOIplm.listMovie();
+        try {
+			return movieDAOIplm.listMovie();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
     public List<String> loadMovieString() {
         List<String> movieList = new ArrayList<>();
-        List<MovieVO> movieVOS = movieDAOIplm.listMovie();
+        List<MovieVO> movieVOS;
+		try {
+			movieVOS = movieDAOIplm.listMovie();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         for(int i =0; i<movieVOS.size(); i++)
             movieList.add(movieVOS.get(i).getTitle());

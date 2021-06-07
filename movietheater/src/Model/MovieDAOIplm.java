@@ -54,15 +54,16 @@ public class MovieDAOIplm implements MovieDAO {
 		}
 	}
 
-	public ArrayList<MovieVO> listMovie(){
+	public ArrayList<MovieVO> listMovie() throws Exception{
 		connDB();
 		//String query = "SELECT * FROM MOVIE";
-		ArrayList<MovieVO> movieVoList = new ArrayList<MovieVO>();
 
-		try {
 		PreparedStatement pst = con.prepareStatement("SELECT * FROM MOVIE");
 		ResultSet rs = null;
 
+		ArrayList<MovieVO> movieVoList = new ArrayList<MovieVO>();
+
+		try {
 			rs = pst.executeQuery();
 
 			while(rs.next()) {
