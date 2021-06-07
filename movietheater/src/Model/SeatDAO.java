@@ -84,8 +84,6 @@ public class SeatDAO {
 		}
 		return list;
 	}
-	
-	public static void main(String[] args) {
-	}
+
 
 }
