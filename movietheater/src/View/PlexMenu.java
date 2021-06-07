@@ -127,6 +127,7 @@ public class PlexMenu {
 			Exception e = new Exception();
 			throw e;
 		}
+		vo.setPlexNo(plexNO);
 		vo.setColumn(column);
 		vo.setRow(rows);
 		pdao.regPlex(vo);
