@@ -75,7 +75,7 @@ public class ReservationDAO {
     public List<ReservationVO> findAll(String userid) throws Exception{
         List<ReservationVO> reservationList = new ArrayList<>();
         connDB();
-        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where UserId like ?");
+        PreparedStatement pst = con.prepareStatement("select * from Reservation_Test where UserId like ? order by reserve_id");
         pst.setString(1,userid);
         ResultSet rs = null;
         rs = pst.executeQuery();

@@ -58,48 +58,63 @@ public class ReservationView{
 
         String[] seat = tempSeat();
 
-        int selectTheater = 0;
-        int selectMovie = 0;
+        String selectTheater ="";
+        String selectMovie ="";
         String selectSeat;
         int selectPeople = 0;
+        boolean check = true;
 
         LocalDate reserveNow = LocalDate.now();
 
         String userId = myPageVO.getId();
 
-        for(int i= 0; i<movieList.size();i++)
-            System.out.println(movieList.get(i) + "\t");
+        while(check){
+            System.out.print("영화 목록 : ");
+            for(int i= 0; i<movieList.size();i++)
+                System.out.print(movieList.get(i) + "\t");
 
-        System.out.println();
-        System.out.print("예약 할 영화를 고르세요 : ");
-        selectMovie = scanner.nextInt();
+            System.out.println(" ");
+            System.out.print("예약 할 영화를 고르세요 : ");
+            selectMovie = scanner.next();
 
-        for(int i =0; i<plexList.size(); i++)
-            System.out.print(plexList.get(i) + "\t");
+            if(!movieList.contains(selectMovie)){
+                System.out.println("잘못 된 영화이름 입니다. 다시 입력 해주세요.");
+                System.out.println(" ");
+            }else
+                break;
+        }
 
-        System.out.println();
-        System.out.print("상영관을 고르세요 : ");
-        selectTheater = scanner.nextInt();
+        while(check){
+            System.out.print("상영관 목록 : ");
+            for(int i =0; i<plexList.size(); i++)
+                System.out.print(plexList.get(i) + "\t");
+
+            System.out.println(" ");
+            System.out.print("상영관을 고르세요 : ");
+            selectTheater = scanner.next();
+
+            if(!plexList.contains(selectTheater)){
+                System.out.println("잘못된 상영관입니다. 다시 입력 해주세요.");
+                System.out.println(" ");
+            }else
+                break;
+        }
 
         //좌석 뷰코드
         //int plexNo = plexDAO.selectByNo(selectTheater).getPlexNo();
         PlexDAO pdao = new PlexDAO();
-        if(plexList.size() < selectTheater) {
-             System.out.println("잘못된 상영관입니다.");
-             return;
-        }
-        String name = plexList.get(selectTheater - 1);
-        seatController.SeatLeftPrint(name, reserveNow);
+//        if(plexList.size() < selectTheater) {
+//             System.out.println("잘못된 상영관입니다.");
+//             return;
+//        }
+        seatController.SeatLeftPrint(selectTheater, reserveNow);
 
         System.out.print("좌석을 고르세요 : ");
         selectSeat = scanner.next();
 
 
-//        System.out.print("예약할 인원을 선택하세요 : ");
-//        selectPeople = scanner.nextInt();
-//
-        reserve.setTheaterName(plexList.get(selectTheater-1));
-        reserve.setMovieName(movieList.get(selectMovie-1));
+        reserve.setTheaterName(selectTheater);
+        reserve.setMovieName(selectMovie);
         reserve.setSeat(selectSeat);
         reserve.setReserveDay(reserveNow);
         reserve.setPeople(1);
@@ -124,7 +139,7 @@ public class ReservationView{
         for(int i = 0; i<test.size(); i++){
             System.out.print("예약번호 : " + test.get(i).getReserve_id()+ "\t");
             System.out.print("상영관 : " + test.get(i).getTheaterName() + "\t");
-            System.out.print("영화 : " + test.get(i).getMovieName()+ "\t");
+            System.out.print("영화 : " + test.get(i).getMovieName()+ "\t"+"\t");
             System.out.print("예약일 : " + test.get(i).getReserveDay()+ "\t");
             System.out.print("예매 인원 : " + test.get(i).getPeople()+ "\t");
             System.out.println("좌석 : " + test.get(i).getSeat());
