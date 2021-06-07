@@ -20,7 +20,7 @@ public class PlexMenu {
 		//상영관 수정(이름변경 제외)과 삭제시 상영관에서 상영중인 영화의 티켓들을 취소해야 됨
 		//상영관의 시청여부는 티켓과 현재시간을 비교하여 판단
 		do {
-			System.out.println("상영관 관리 페이지");
+			System.out.println("=========== 상영관 메뉴 ============");
 			System.out.println("MENU \n0.상영관 조회\n1.상영관 관리\n2.종료하기");
 			Scanner scan = new Scanner(System.in);
 			String menu = scan.next();
@@ -30,10 +30,11 @@ public class PlexMenu {
 
 			} else if (menu.equals("1")) {
 				// 상영관 관리
-				System.out.println("1.상영관 관리 \n1:등록 \n2:수정 \n3:삭제 \n4: 상영관 좌석 출력");
+				System.out.println(" ============상영관 관리 ============ \n1.등록 \n2.수정 \n3.삭제 \n4.상영관 좌석 출력");
 				String submenu = scan.next();
 
 				if (submenu.equals("1")) {
+					PlexList();
 					if(PlexRegister() == 1) {
 					System.out.println("새로운 상영관이 등록되었습니다.");
 					PlexList();
@@ -43,6 +44,7 @@ public class PlexMenu {
 					PlexEdit();
 					PlexList();
 				} else if (submenu.equals("3")) {
+					PlexList();
 					PlexRemove();
 					System.out.println("정상적으로 삭제되었습니다.");
 					PlexList();
@@ -67,7 +69,7 @@ public class PlexMenu {
 
 
 	public void PlexList() {
-		System.out.println("상영관 리스트");
+		System.out.println("========== 상영관 리스트 ==========");
 		PlexDAO pdao = new PlexDAO();
 		plist = pdao.selectAll();
 		for(PlexVO vo: plist) {
@@ -80,7 +82,7 @@ public class PlexMenu {
 	}
 
 	public void PlexPrintMenu(){
-		System.out.println("상영관 번호를 입력해주세요:");
+		System.out.println("원하는 상영관 번호를 입력해주세요:");
 		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
@@ -101,7 +103,7 @@ public class PlexMenu {
 		try {
 		PlexDAO pdao = new PlexDAO();
 		Scanner scan = new Scanner(System.in);
-		System.out.println("상영관 등록 페이지");
+		System.out.println("=========== 상영관 등록 ===========");
 		System.out.println("상영관 번호: ");
 		plexNO = scan.nextInt();
 		if(pdao.IsExist(plexNO)) {
@@ -140,7 +142,7 @@ public class PlexMenu {
 	}
 	
 	private void PlexEdit() {
-		System.out.println("상영관 수정");
+		System.out.println("=========== 상영관 수정 ===========");
 		System.out.println("수정할 상영관 번호를 입력해주세요.");
 		Scanner scan = new Scanner(System.in);
 		int plexNo = scan.nextInt();
@@ -180,7 +182,7 @@ public class PlexMenu {
 
 	private void PlexRemove() {
 		Scanner scan = new Scanner(System.in);
-		System.out.println("상영관 삭제");
+		System.out.println("=========== 상영관 삭제 ===========");
 		System.out.println("삭제할 상영관 번호를 입력하세요");
 		int plexNo = scan.nextInt();
 		PlexDAO pdao = new PlexDAO();
