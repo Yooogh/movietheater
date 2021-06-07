@@ -37,6 +37,7 @@ public class SelectScreen {
                     sc.close();
                     System.exit(0);
                     break;
+
             }
         }
     }
