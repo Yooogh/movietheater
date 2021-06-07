@@ -77,12 +77,15 @@ public class MovieExe {
 					System.out.println("========현재 저장된 영화 목록========");
 					try {
 						movieVoList = MDI.listMovie();
+
 						for(int i=0; i<movieVoList.size(); i++) {
 							System.out.println("제목 : " + movieVoList.get(i).getTitle() + " / 감독 : " + movieVoList.get(i).getDirector() + " / 장르 : " + movieVoList.get(i).getGenre() + " / 등급 : " + movieVoList.get(i).getRate());
 						}
-					} catch (Exception e) {
+					}
+					catch (Exception e) {
 						e.printStackTrace();
 					}
+
 					System.out.println("");
 					System.out.println("==========영화 삭제==========");
 					System.out.print("삭제할 영화의 이름 : ");
@@ -94,7 +97,7 @@ public class MovieExe {
 					System.out.print("[그만:0 계속:1]: ");
 					int k = sc.nextInt();
 					System.out.println("");
-					
+
 					if (k==0) {
 						break;
 					}else if(k==1) {
@@ -107,6 +110,18 @@ public class MovieExe {
 				break;
 
 			case 3 :
+				System.out.println("========현재 저장된 영화 목록========");
+				try {
+					movieVoList = MDI.listMovie();
+
+					for(int i=0; i<movieVoList.size(); i++) {
+						System.out.println("제목 : " + movieVoList.get(i).getTitle() + " / 감독 : " + movieVoList.get(i).getDirector() + " / 장르 : " + movieVoList.get(i).getGenre() + " / 등급 : " + movieVoList.get(i).getRate());
+					}
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.out.println("");
 				System.out.println("==========영화 조회==========");
 				System.out.print("조회할 영화의 제목을 입력 : ");
 
@@ -149,7 +164,7 @@ public class MovieExe {
 				}
 				System.out.println("");
 				break;
-				
+
 			case 5 :
 				System.out.println("=====프로그램을 종료합니다=====");
 				sc.close();

@@ -80,11 +80,13 @@ public class AdminMenu {
                     while (r == 1) {
                         System.out.println("=========관리자 삭제=========");
                         System.out.println("====관리자 ID|관리자 이름=====");
+                        
                         List<AdminVO> adminList = adao.viewAdminAccountList();
                         for (int j = 0; j < adminList.size(); j++) {
                             System.out.print("관리자 ID: " + adminList.get(j).getAdminID() + "|");
                             System.out.println("관리자 이름: " + adminList.get(j).getAdminNAME());
                         }
+                        
                         System.out.print("삭제할 ID: ");
                         String id = sc.next();
                         adao.deleteID(id);//String형식의 id를 입력받아 DB의 Adminaccount의 ID형식일 경우 삭제
