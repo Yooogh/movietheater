@@ -1,10 +1,7 @@
 package Model;
 
-import Model.MovieDAO;
-import Model.MovieVO;
-
 import java.sql.*;
-
+import java.util.ArrayList;
 
 public class MovieDAOIplm implements MovieDAO {
 	
@@ -16,13 +13,22 @@ public class MovieDAOIplm implements MovieDAO {
 	private Statement stmt;
 	private ResultSet rs;	
 
+	public void addMovie(MovieVO MVO) {
+		connDB();
+		String query = "INSERT INTO MOVIE(title, director, genre, rate)" + "values ('" + MVO.getTitle()+"', '"+ MVO.getDirector() + "', '" +MVO.getGenre() + "', '" + MVO.getRate() + "')";
+	
+		try {
+			stmt.executeUpdate(query);
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public MovieVO searchMovie(String title) throws Exception {
 		connDB();  
 		MovieVO movieVo = new MovieVO();
 		PreparedStatement pst = con.prepareStatement("SELECT * FROM MOVIE WHERE TITLE LIKE ?" );
 		pst.setString(1, title);
-
-
 
 		ResultSet rs = null;
 		rs = pst.executeQuery();
@@ -31,7 +37,6 @@ public class MovieDAOIplm implements MovieDAO {
 		movieVo.setDirector(rs.getString("director"));
 		movieVo.setGenre(rs.getString("genre"));
 		movieVo.setRate(rs.getString("rate"));
-
 	
 		return movieVo;
 		}
@@ -48,18 +53,38 @@ public class MovieDAOIplm implements MovieDAO {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	public void addMovie(MovieVO MVO) {
+
+	public ArrayList<MovieVO> listMovie() throws Exception{
 		connDB();
-		String query = "INSERT INTO MOVIE(title, director, genre, rate)" + "values ('" + MVO.getTitle()+"', '"+ MVO.getDirector() + "', '" +MVO.getGenre() + "', '" + MVO.getRate() + "')";
-	
+		//String query = "SELECT * FROM MOVIE";
+
+		PreparedStatement pst = con.prepareStatement("SELECT * FROM MOVIE");
+		ResultSet rs = null;
+
+		ArrayList<MovieVO> movieVoList = new ArrayList<MovieVO>();
+
 		try {
-			stmt.executeUpdate(query);
-		}catch (SQLException e) {
+			rs = pst.executeQuery();
+
+			while(rs.next()) {
+				MovieVO movieVo = new MovieVO();
+
+				movieVo.setTitle(rs.getString("title"));
+				movieVo.setDirector(rs.getString("director"));
+				movieVo.setGenre(rs.getString("genre"));
+				movieVo.setRate(rs.getString("rate"));
+				movieVoList.add(movieVo);
+			}
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
+		return movieVoList;
 	}
+	
 	
 	private void connDB() {
 		try {

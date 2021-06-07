@@ -39,7 +39,7 @@ public class AdminMenu {
                     continue;
 
                 case "2":
-                    ME.Movieadd();      //  Movieadd 메소드 호출 실행
+                    ME.movieExe();      //  movieExe 메소드 호출 실행
                     continue;
 
                 case "3":

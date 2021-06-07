@@ -1,6 +1,5 @@
 package View;
 
-
 import Controller.ReservationController;
 import Controller.SeatController;
 import Model.MyPageVO;
