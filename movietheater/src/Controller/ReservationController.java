@@ -101,9 +101,18 @@ public class ReservationController {
     }
 
 
-    public void loadMovie(){
+   public List<MovieVO> loadMovie() {
+        return movieDAOIplm.listMovie();
+    }
 
-        //영화목록 가져오는 메소드
+    public List<String> loadMovieString() {
+        List<String> movieList = new ArrayList<>();
+        List<MovieVO> movieVOS = movieDAOIplm.listMovie();
+
+        for(int i =0; i<movieVOS.size(); i++)
+            movieList.add(movieVOS.get(i).getTitle());
+
+        return movieList;
     }
 
 

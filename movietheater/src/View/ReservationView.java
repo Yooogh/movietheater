@@ -52,10 +52,10 @@ public class ReservationView{
     public void ReservationCMD(MyPageVO myPageVO){
         ReservationVO reserve = new ReservationVO();
         List<String> plexList = reservationController.loadTheaterString();
+        List<String> movieList = reservationController.loadMovieString();
         SeatController seatController = new SeatController();
         PlexDAO plexDAO = new PlexDAO();
 
-        String[] movie = tempMovie();
         String[] seat = tempSeat();
 
         int selectTheater = 0;
@@ -67,9 +67,8 @@ public class ReservationView{
 
         String userId = myPageVO.getId();
 
-        for(int i = 0 ; i<movie.length; i++){
-            System.out.print(movie[i] + "\t");
-        }
+        for(int i= 0; i<movieList.size();i++)
+            System.out.println(movieList.get(i) + "\t");
 
         System.out.println();
         System.out.print("예약 할 영화를 고르세요 : ");
@@ -100,7 +99,7 @@ public class ReservationView{
 //        selectPeople = scanner.nextInt();
 //
         reserve.setTheaterName(plexList.get(selectTheater-1));
-        reserve.setMovieName(movie[selectMovie-1]);
+        reserve.setMovieName(movieList.get(selectMovie-1));
         reserve.setSeat(selectSeat);
         reserve.setReserveDay(reserveNow);
         reserve.setPeople(1);
