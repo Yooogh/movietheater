@@ -36,19 +36,19 @@ public class AdminMenu {
 
                 case "1":
                     PM.PlexManager();   //  PlexManager 메소드 호출 실행
-                    continue;
+                    break;
 
                 case "2":
                     ME.movieExe();      //  movieExe 메소드 호출 실행
-                    continue;
+                    break;
 
                 case "3":
                     MI.memberView();    //  memberView 메소드 호출 실행
-                    continue;
+                    break;
 
                 case "4":
                     RI.salesInquiry();  //   salesInquiry 메소드 호출 실행
-                    continue;
+                    break;
 
                 case "5":
                     while(q==1) {

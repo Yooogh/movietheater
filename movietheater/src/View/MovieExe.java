@@ -21,7 +21,8 @@ public class MovieExe {
 			System.out.println("2.영화 삭제");
 			System.out.println("3.영화 조회");
 			System.out.println("4.영화 리스트 열람");
-			System.out.println("5.프로그램 종료");
+			System.out.println("5.초기화면으로 돌아가기");
+			System.out.println("6.프로그램 종료");
 			System.out.print("메뉴 선택 : ");
 
 			int menuNo = sc.nextInt();
@@ -103,7 +104,7 @@ public class MovieExe {
 					}else if(k==1) {
 						continue;
 					}else {
-						System.out.println("잘못 입력하여 관리자 메뉴로 돌아갑니다.");
+						System.out.println("잘못 입력하여 영화관리 메뉴로 돌아갑니다.");
 						System.out.println("");
 					}
 				}
@@ -146,7 +147,7 @@ public class MovieExe {
 				else if(l==1) 
 					continue;
 				else {
-					System.out.println("잘못 입력하여 관리자 메뉴로 돌아갑니다.");
+					System.out.println("잘못 입력하여 영화관리 메뉴로 돌아갑니다.");
 					System.out.println("");
 				}
 				break;
@@ -166,6 +167,10 @@ public class MovieExe {
 				break;
 
 			case 5 :
+				System.out.println("상위항목 선택으로 돌아갑니다.");
+				return;
+
+			case 6 :
 				System.out.println("=====프로그램을 종료합니다=====");
 				sc.close();
 				System.exit(0); //  프로그램 강제종료 구문
