@@ -118,7 +118,7 @@ public class ReservationView{
         reserve.setSeat(selectSeat);
         reserve.setReserveDay(reserveNow);
         reserve.setPeople(1);
-        reserve.setTotalPrice(selectPeople * 10000);
+        reserve.setTotalPrice(10000);
         reserve.setUserId(userId);
 
         reservationController.save(reserve);
